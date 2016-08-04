@@ -7,19 +7,14 @@
   <version>1.0-SNAPSHOT</version>
   <name>web-crawler</name>
   <url>http://maven.apache.org</url>
-  <repositories>
-	<repository>
-	<id>in-project</id>
-	<name>In Project Repo</name>
-	<url>file://${project.basedir}/libs</url>
-	</repository>
-  </repositories>
   <dependencies>
 	<dependency>
 	  <groupId>jsoup</groupId>
 	  <artifactId>jsoup</artifactId>
+	  <scope>system</scope>
 	  <version>1.8.3</version>
-	</dependency>
+	  <systemPath>${basedir}\lib\jsoup\jsoup-1.8.3.jar</systemPath>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
