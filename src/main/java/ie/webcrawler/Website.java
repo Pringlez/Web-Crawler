@@ -5,8 +5,8 @@ public class Website {
 	private String url;
 	private int hyperLinkCount;
 	
-	public Website() {
-		
+	public Website(String url) {
+		setUrl(url);
 	}
 
 	public String getUrl() {

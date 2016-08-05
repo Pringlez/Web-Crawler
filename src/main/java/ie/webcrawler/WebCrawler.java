@@ -15,34 +15,33 @@ public class WebCrawler {
 		setWebsites(new ArrayBlockingQueue<Website>(1000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
 		setRunning(isRunning);
+		addTestWebsites();
 		initThreads(100);
 	}
 	
 	private void initThreads(int delayMS){
-		
-		while(isRunning()){
-			if(!getWebsites().isEmpty()){
-				Runnable worker;
-				try {
-					worker = new WorkerThread(getWebsites().take());
-					executor.execute(worker);
-			        executor.shutdown();
-				} catch (InterruptedException error) {
-					System.out.println("Error - " + error);
-				}
-				
-		        //while (!executor.isTerminated()) {
-		        //}
-		        
-		        System.out.println("All Threads Done!");
+		if(!getWebsites().isEmpty()){
+			Runnable worker;
+			try {
+				worker = new WorkerThread(getWebsites().take());
+				executor.execute(worker);
+		        executor.shutdown();
+			} catch (InterruptedException error) {
+				System.out.println("Error - " + error);
 			}
-				
-	        try {
-				Thread.sleep(delayMS);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}	
+		}
+			
+        try {
+			Thread.sleep(delayMS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void addTestWebsites(){
+		this.websites.offer(new Website("http://google.com"));
+		//this.websites.offer(new Website("http://www.rte.ie"));
+		//this.websites.offer(new Website("http://www.bbc.com"));
 	}
 	
 	public BlockingQueue<Website> getWebsites() {

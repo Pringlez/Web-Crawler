@@ -10,11 +10,23 @@ import org.jsoup.select.Elements;
 public class WorkerThread implements Runnable {
 	
 	private Website website;
+	Document doc;
+    Elements links;
 	
 	public WorkerThread(Website website) {
 		setWebsite(website);
+		initCrawl(website.getUrl());
 	}
 	
+	private void initCrawl(String url) {
+		try {
+			this.doc = Jsoup.connect(url).get();
+			this.links = doc.select("a");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void run() {
 		try {
@@ -25,14 +37,11 @@ public class WorkerThread implements Runnable {
 	}
 	
 	public void crawlSite(String url) throws IOException {
-
-		Document doc = Jsoup.connect("").get();
-	    Elements links = doc.select("a");
-
-        for (Element link : links) {
+        for (Element link : this.links) {
             if(!url.contains(link.attr("abs:href"))) {
             	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
-            	crawlSite(link.attr("href"));
+            	System.out.println("Site: " + url + " has " + getWebsite().getHyperLinkCount() + " links");
+            	//crawlSite(link.attr("href"));
             }
         }
     }
