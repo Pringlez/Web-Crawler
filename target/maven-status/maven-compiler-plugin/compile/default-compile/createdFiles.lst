@@ -1,4 +1,6 @@
-ie\webcrawler\Website.class
-ie\webcrawler\WebCrawler.class
-ie\webcrawler\Runner.class
-ie\webcrawler\WorkerThread.class
+ie\walsh\webcrawler\app\WebCrawler.class
+ie\walsh\webcrawler\gui\WebCrawler.class
+ie\walsh\webcrawler\Runner.class
+ie\walsh\webcrawler\gui\MainPanel.class
+ie\walsh\webcrawler\app\Website.class
+ie\walsh\webcrawler\app\WorkerThread.class

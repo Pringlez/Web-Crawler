@@ -1,4 +1,4 @@
-package ie.webcrawler;
+package ie.walsh.webcrawler.app;
 
 public class Website {
 

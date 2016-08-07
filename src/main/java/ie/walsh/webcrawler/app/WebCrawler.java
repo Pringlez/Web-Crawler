@@ -1,4 +1,4 @@
-package ie.webcrawler;
+package ie.walsh.webcrawler.app;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

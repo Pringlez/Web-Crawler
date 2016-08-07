@@ -1,4 +1,6 @@
-C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\webcrawler\Runner.java
-C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\webcrawler\Website.java
-C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\webcrawler\WebCrawler.java
-C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\webcrawler\WorkerThread.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\app\Website.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\gui\MainPanel.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\Runner.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\app\WorkerThread.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\app\WebCrawler.java
+C:\Users\John\Desktop\Work\Projects\Java\Web-Crawler\src\main\java\ie\walsh\webcrawler\gui\WebCrawler.java

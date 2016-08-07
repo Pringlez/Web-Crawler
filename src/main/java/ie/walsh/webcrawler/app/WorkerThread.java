@@ -1,4 +1,4 @@
-package ie.webcrawler;
+package ie.walsh.webcrawler.app;
 
 import java.io.IOException;
 

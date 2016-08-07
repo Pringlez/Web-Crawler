@@ -1,4 +1,6 @@
-package ie.webcrawler;
+package ie.walsh.webcrawler;
+
+import ie.walsh.webcrawler.app.WebCrawler;
 
 public class Runner {
 
