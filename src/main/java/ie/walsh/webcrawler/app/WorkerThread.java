@@ -22,8 +22,8 @@ public class WorkerThread implements Runnable {
 		try {
 			this.doc = Jsoup.connect(url).get();
 			this.links = doc.select("a");
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException error) {
+			System.out.println("Error - " + error);
 		}
 	}
 

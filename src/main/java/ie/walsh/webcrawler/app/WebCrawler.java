@@ -9,39 +9,40 @@ public class WebCrawler {
 
 	private BlockingQueue<Website> websites;
 	private ExecutorService executor;
-	private boolean isRunning;
 	
-	public WebCrawler(boolean isRunning, int threadPoolSize) {
+	public WebCrawler(int threadPoolSize) {
 		setWebsites(new ArrayBlockingQueue<Website>(1000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
-		setRunning(isRunning);
-		addTestWebsites();
-		initThreads(100);
+		addWebsite("http://www.gmit.ie");
+		initThreads(250);
 	}
 	
 	private void initThreads(int delayMS){
-		if(!getWebsites().isEmpty()){
-			Runnable worker;
-			try {
-				worker = new WorkerThread(getWebsites().take());
-				executor.execute(worker);
-		        executor.shutdown();
+		// Keep looping & check the queue for any websites to process
+		while(true){
+			if(!getWebsites().isEmpty()){
+				Runnable worker;
+				try {
+					// Take a website from the queue and attempt to start a new thread
+					worker = new WorkerThread(getWebsites().take());
+					executor.execute(worker);
+			        executor.shutdown();
+				} catch (InterruptedException error) {
+					System.out.println("Error - " + error);
+				}
+			}
+			
+			// Delay the thread by certain time
+	        try {
+				Thread.sleep(delayMS);
 			} catch (InterruptedException error) {
 				System.out.println("Error - " + error);
 			}
 		}
-			
-        try {
-			Thread.sleep(delayMS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	private void addTestWebsites(){
-		this.websites.offer(new Website("http://google.com"));
-		//this.websites.offer(new Website("http://www.rte.ie"));
-		//this.websites.offer(new Website("http://www.bbc.com"));
+	private void addWebsite(String url){
+		this.websites.offer(new Website(url));
 	}
 	
 	public BlockingQueue<Website> getWebsites() {
@@ -58,13 +59,5 @@ public class WebCrawler {
 
 	public void setExecutor(ExecutorService executor) {
 		this.executor = executor;
-	}
-
-	public boolean isRunning() {
-		return isRunning;
-	}
-
-	public void setRunning(boolean isRunning) {
-		this.isRunning = isRunning;
 	}
 }
