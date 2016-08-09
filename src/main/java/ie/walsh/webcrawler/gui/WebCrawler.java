@@ -18,8 +18,8 @@ public class WebCrawler extends JFrame {
 	
 	private void setupFrame(){
 		setContentPane(currentPanel);
-		setTitle("Word Cloud Generator");
-		setSize(702, 415);
+		setTitle("Web Crawler");
+		setSize(753, 545);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
