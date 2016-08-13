@@ -2,19 +2,25 @@ package ie.walsh.webcrawler.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import ie.walsh.webcrawler.app.Website;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainPanel extends JPanel {
 	
@@ -22,6 +28,7 @@ public class MainPanel extends JPanel {
 	
 	private Font myFont = new Font("Serif", Font.BOLD, 14);
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
+	private DefaultListModel<String> urlListModel;
 	
 	public MainPanel() {
 		setLayout(null);
@@ -47,6 +54,11 @@ public class MainPanel extends JPanel {
 		insertURLPanel.add(txtAddURL);
 		
 		JButton btnAddURL = new JButton("Add to Queue");
+		btnAddURL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		btnAddURL.setBounds(589, 6, 129, 24);
 		btnAddURL.setFont(myFont);
 		insertURLPanel.add(btnAddURL);
@@ -58,7 +70,12 @@ public class MainPanel extends JPanel {
 		add(optionsPanel);
 		
 		JButton btnExitApp = new JButton("Exit");
-		btnExitApp.setBounds(598, 7, 122, 25);
+		btnExitApp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnExitApp.setBounds(596, 7, 122, 25);
 		btnExitApp.setFont(myFont);
 		optionsPanel.add(btnExitApp);
 	}
@@ -73,28 +90,55 @@ public class MainPanel extends JPanel {
 		title.setTitleJustification(TitledBorder.CENTER);
 		urlListPanel.setBorder(title);
 		
-		JList<Website> list = new JList<Website>();
-		list.setBounds(10, 26, 335, 306);
-		list.setBorder(bGreyLine);
-		urlListPanel.add(list);
+		urlListModel = new DefaultListModel<String>();
+		Website temp = new Website("http://www.gmit.ie");
+		urlListModel.addElement(temp.getUrl());
+		urlListModel.addElement(temp.getUrl());
+		urlListModel.addElement(temp.getUrl());
+		
+		JList<String> urlList = new JList<String>(urlListModel);
+		urlList.setBounds(10, 26, 340, 306);
+		urlList.setBorder(bGreyLine);
+		urlList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		urlList.setLayoutOrientation(JList.VERTICAL);
+		urlList.setVisibleRowCount(-1);
+		
+		JScrollPane listScroller = new JScrollPane(urlList);
+		listScroller.setPreferredSize(new Dimension(250, 80));
+		urlListPanel.add(urlList);
 		
 		JButton btnReProcess = new JButton("Re-Process");
+		btnReProcess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnReProcess.setBounds(10, 339, 107, 26);
 		btnReProcess.setFont(myFont);
+		btnReProcess.setEnabled(false);
 		urlListPanel.add(btnReProcess);
 		
 		JButton btnRemove = new JButton("Remove");
-		btnRemove.setBounds(123, 339, 107, 26);
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRemove.setBounds(127, 339, 107, 26);
 		btnRemove.setFont(myFont);
+		btnRemove.setEnabled(false);
 		urlListPanel.add(btnRemove);
 		
 		JButton btnClearList = new JButton("Clear List");
-		btnClearList.setBounds(238, 339, 107, 26);
+		btnClearList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnClearList.setBounds(243, 339, 107, 26);
 		btnClearList.setFont(myFont);
+		btnClearList.setEnabled(false);
 		urlListPanel.add(btnClearList);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(10, 372, 335, 23);
+		progressBar.setBounds(10, 372, 340, 23);
 		urlListPanel.add(progressBar);
 	}
 	
