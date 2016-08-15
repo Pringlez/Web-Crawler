@@ -102,10 +102,11 @@ public class MainPanel extends JPanel {
 		urlList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		urlList.setLayoutOrientation(JList.VERTICAL);
 		urlList.setVisibleRowCount(-1);
-		
-		JScrollPane listScroller = new JScrollPane(urlList);
-		listScroller.setPreferredSize(new Dimension(250, 80));
 		urlListPanel.add(urlList);
+		
+		//JScrollPane listScroller = new JScrollPane(urlList);
+		//listScroller.setPreferredSize(new Dimension(250, 80));
+		
 		
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
@@ -144,6 +145,7 @@ public class MainPanel extends JPanel {
 	
 	private void setupURLDetailsPanel() {
 		JPanel urlDetailsPanel = new JPanel();
+		urlDetailsPanel.setLayout(null);
 		urlDetailsPanel.setBounds(377, 54, 361, 405);
 		
 		TitledBorder title = BorderFactory.createTitledBorder(bGreyLine, "URL Details");
@@ -151,5 +153,35 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.setBorder(title);
 		
 		add(urlDetailsPanel);
+		
+		JLabel lblURLName = new JLabel("URL Name:");
+		lblURLName.setBounds(20, 25, 87, 20);
+		lblURLName.setFont(myFont);
+		urlDetailsPanel.add(lblURLName);
+		
+		JLabel lblURLNameTxt = new JLabel();
+		lblURLNameTxt.setBounds(109, 25, 236, 20);
+		lblURLNameTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLNameTxt);
+		
+		JLabel lblURLHyperLinks = new JLabel("Links:");
+		lblURLHyperLinks.setBounds(20, 55, 55, 20);
+		lblURLHyperLinks.setFont(myFont);
+		urlDetailsPanel.add(lblURLHyperLinks);
+		
+		JLabel lblURLHyperLinksTxt = new JLabel();
+		lblURLHyperLinksTxt.setBounds(75, 55, 270, 20);
+		lblURLHyperLinksTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLHyperLinksTxt);
+		
+		JLabel lblURLProcessTime = new JLabel("Process Time:");
+		lblURLProcessTime.setBounds(20, 85, 100, 20);
+		lblURLProcessTime.setFont(myFont);
+		urlDetailsPanel.add(lblURLProcessTime);
+		
+		JLabel lblURLProcessTimeTxt = new JLabel();
+		lblURLProcessTimeTxt.setBounds(125, 85, 243, 20);
+		lblURLProcessTimeTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLProcessTimeTxt);
 	}
 }
