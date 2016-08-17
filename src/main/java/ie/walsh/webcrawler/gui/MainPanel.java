@@ -1,24 +1,19 @@
 package ie.walsh.webcrawler.gui;
 
+import ie.walsh.webcrawler.app.Website;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-
-import ie.walsh.webcrawler.app.Website;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
 import javax.swing.JList;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -107,7 +102,6 @@ public class MainPanel extends JPanel {
 		//JScrollPane listScroller = new JScrollPane(urlList);
 		//listScroller.setPreferredSize(new Dimension(250, 80));
 		
-		
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,7 +154,7 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLName);
 		
 		JLabel lblURLNameTxt = new JLabel();
-		lblURLNameTxt.setBounds(109, 25, 236, 20);
+		lblURLNameTxt.setBounds(108, 25, 236, 20);
 		lblURLNameTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLNameTxt);
 		
@@ -180,8 +174,28 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLProcessTime);
 		
 		JLabel lblURLProcessTimeTxt = new JLabel();
-		lblURLProcessTimeTxt.setBounds(125, 85, 243, 20);
+		lblURLProcessTimeTxt.setBounds(121, 85, 221, 20);
 		lblURLProcessTimeTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTimeTxt);
+		
+		JLabel lblURLDepth = new JLabel("URL Depth:");
+		lblURLDepth.setBounds(20, 115, 88, 20);
+		lblURLDepth.setFont(myFont);
+		urlDetailsPanel.add(lblURLDepth);
+		
+		JLabel lblURLDepthTxt = new JLabel();
+		lblURLDepthTxt.setBounds(108, 115, 234, 20);
+		lblURLDepthTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLDepthTxt);
+		
+		JLabel lblURLExternalLinks = new JLabel("External Links:");
+		lblURLExternalLinks.setBounds(20, 145, 110, 20);
+		lblURLExternalLinks.setFont(myFont);
+		urlDetailsPanel.add(lblURLExternalLinks);
+		
+		JLabel lblURLExternalLinksTxt = new JLabel();
+		lblURLExternalLinksTxt.setBounds(130, 145, 212, 20);
+		lblURLExternalLinksTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLExternalLinksTxt);
 	}
 }
