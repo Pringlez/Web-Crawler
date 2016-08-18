@@ -1,6 +1,5 @@
 package ie.walsh.webcrawler.gui;
 
-import ie.walsh.webcrawler.app.Website;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -44,14 +43,14 @@ public class MainPanel extends JPanel {
 		lblAddURL.setFont(myFont);
 		insertURLPanel.add(lblAddURL);
 		
-		JTextField txtAddURL = new JTextField("");
+		final JTextField txtAddURL = new JTextField();
 		txtAddURL.setBounds(80, 6, 504, 25);
 		insertURLPanel.add(txtAddURL);
 		
 		JButton btnAddURL = new JButton("Add to Queue");
 		btnAddURL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				urlListModel.addElement(txtAddURL.getText());
 			}
 		});
 		btnAddURL.setBounds(589, 6, 129, 24);
@@ -86,12 +85,8 @@ public class MainPanel extends JPanel {
 		urlListPanel.setBorder(title);
 		
 		urlListModel = new DefaultListModel<String>();
-		Website temp = new Website("http://www.gmit.ie");
-		urlListModel.addElement(temp.getUrl());
-		urlListModel.addElement(temp.getUrl());
-		urlListModel.addElement(temp.getUrl());
 		
-		JList<String> urlList = new JList<String>(urlListModel);
+		final JList<String> urlList = new JList<String>(urlListModel);
 		urlList.setBounds(10, 26, 340, 306);
 		urlList.setBorder(bGreyLine);
 		urlList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -105,31 +100,37 @@ public class MainPanel extends JPanel {
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				for(int i = 0; i < urlListModel.size(); i++){
+					
+				}
 			}
 		});
 		btnReProcess.setBounds(10, 339, 107, 26);
 		btnReProcess.setFont(myFont);
-		btnReProcess.setEnabled(false);
 		urlListPanel.add(btnReProcess);
 		
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
+					urlListModel.removeElementAt(urlList.getSelectedIndex());
+				}catch(Exception error){
+					System.out.println("Error - " + error);
+				}
 			}
 		});
 		btnRemove.setBounds(127, 339, 107, 26);
 		btnRemove.setFont(myFont);
-		btnRemove.setEnabled(false);
 		urlListPanel.add(btnRemove);
 		
 		JButton btnClearList = new JButton("Clear List");
 		btnClearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				urlListModel.clear();
 			}
 		});
 		btnClearList.setBounds(243, 339, 107, 26);
 		btnClearList.setFont(myFont);
-		btnClearList.setEnabled(false);
 		urlListPanel.add(btnClearList);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -164,7 +165,7 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLHyperLinks);
 		
 		JLabel lblURLHyperLinksTxt = new JLabel();
-		lblURLHyperLinksTxt.setBounds(75, 55, 270, 20);
+		lblURLHyperLinksTxt.setBounds(75, 55, 268, 20);
 		lblURLHyperLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLHyperLinksTxt);
 		
@@ -197,5 +198,25 @@ public class MainPanel extends JPanel {
 		lblURLExternalLinksTxt.setBounds(130, 145, 212, 20);
 		lblURLExternalLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinksTxt);
+		
+		JLabel lblURLJavaScriptFiles = new JLabel("JavaScript Files:");
+		lblURLJavaScriptFiles.setBounds(20, 175, 115, 20);
+		lblURLJavaScriptFiles.setFont(myFont);
+		urlDetailsPanel.add(lblURLJavaScriptFiles);
+		
+		JLabel lblURLJavaScriptFilesTxt = new JLabel();
+		lblURLJavaScriptFilesTxt.setBounds(135, 175, 207, 20);
+		lblURLJavaScriptFilesTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLJavaScriptFilesTxt);
+		
+		JLabel lblURLCSSFiles = new JLabel("CSS Files:");
+		lblURLCSSFiles.setBounds(20, 205, 78, 20);
+		lblURLCSSFiles.setFont(myFont);
+		urlDetailsPanel.add(lblURLCSSFiles);
+		
+		JLabel lblURLCSSFilesTxt = new JLabel();
+		lblURLCSSFilesTxt.setBounds(98, 205, 244, 20);
+		lblURLCSSFilesTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLCSSFilesTxt);
 	}
 }
