@@ -150,72 +150,72 @@ public class MainPanel extends JPanel {
 		add(urlDetailsPanel);
 		
 		JLabel lblURLName = new JLabel("URL Name:");
-		lblURLName.setBounds(20, 25, 87, 20);
+		lblURLName.setBounds(20, 35, 87, 20);
 		lblURLName.setFont(myFont);
 		urlDetailsPanel.add(lblURLName);
 		
 		JLabel lblURLNameTxt = new JLabel();
-		lblURLNameTxt.setBounds(108, 25, 236, 20);
+		lblURLNameTxt.setBounds(108, 35, 236, 20);
 		lblURLNameTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLNameTxt);
 		
 		JLabel lblURLHyperLinks = new JLabel("Links:");
-		lblURLHyperLinks.setBounds(20, 55, 55, 20);
+		lblURLHyperLinks.setBounds(20, 75, 55, 20);
 		lblURLHyperLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLHyperLinks);
 		
 		JLabel lblURLHyperLinksTxt = new JLabel();
-		lblURLHyperLinksTxt.setBounds(75, 55, 268, 20);
+		lblURLHyperLinksTxt.setBounds(75, 75, 268, 20);
 		lblURLHyperLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLHyperLinksTxt);
 		
 		JLabel lblURLProcessTime = new JLabel("Process Time:");
-		lblURLProcessTime.setBounds(20, 85, 100, 20);
+		lblURLProcessTime.setBounds(20, 115, 100, 20);
 		lblURLProcessTime.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTime);
 		
 		JLabel lblURLProcessTimeTxt = new JLabel();
-		lblURLProcessTimeTxt.setBounds(121, 85, 221, 20);
+		lblURLProcessTimeTxt.setBounds(121, 115, 221, 20);
 		lblURLProcessTimeTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTimeTxt);
 		
 		JLabel lblURLDepth = new JLabel("URL Depth:");
-		lblURLDepth.setBounds(20, 115, 88, 20);
+		lblURLDepth.setBounds(20, 155, 88, 20);
 		lblURLDepth.setFont(myFont);
 		urlDetailsPanel.add(lblURLDepth);
 		
 		JLabel lblURLDepthTxt = new JLabel();
-		lblURLDepthTxt.setBounds(108, 115, 234, 20);
+		lblURLDepthTxt.setBounds(108, 155, 234, 20);
 		lblURLDepthTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLDepthTxt);
 		
 		JLabel lblURLExternalLinks = new JLabel("External Links:");
-		lblURLExternalLinks.setBounds(20, 145, 110, 20);
+		lblURLExternalLinks.setBounds(20, 205, 110, 20);
 		lblURLExternalLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinks);
 		
 		JLabel lblURLExternalLinksTxt = new JLabel();
-		lblURLExternalLinksTxt.setBounds(130, 145, 212, 20);
+		lblURLExternalLinksTxt.setBounds(130, 205, 212, 20);
 		lblURLExternalLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinksTxt);
 		
 		JLabel lblURLJavaScriptFiles = new JLabel("JavaScript Files:");
-		lblURLJavaScriptFiles.setBounds(20, 175, 115, 20);
+		lblURLJavaScriptFiles.setBounds(20, 245, 115, 20);
 		lblURLJavaScriptFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFiles);
 		
 		JLabel lblURLJavaScriptFilesTxt = new JLabel();
-		lblURLJavaScriptFilesTxt.setBounds(135, 175, 207, 20);
+		lblURLJavaScriptFilesTxt.setBounds(135, 245, 207, 20);
 		lblURLJavaScriptFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFilesTxt);
 		
 		JLabel lblURLCSSFiles = new JLabel("CSS Files:");
-		lblURLCSSFiles.setBounds(20, 205, 78, 20);
+		lblURLCSSFiles.setBounds(20, 285, 78, 20);
 		lblURLCSSFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFiles);
 		
 		JLabel lblURLCSSFilesTxt = new JLabel();
-		lblURLCSSFilesTxt.setBounds(98, 205, 244, 20);
+		lblURLCSSFilesTxt.setBounds(98, 285, 244, 20);
 		lblURLCSSFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFilesTxt);
 	}
