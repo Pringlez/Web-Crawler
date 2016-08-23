@@ -1,5 +1,6 @@
 package ie.walsh.webcrawler.app;
 
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -9,11 +10,11 @@ public class WebCrawler {
 
 	private BlockingQueue<Website> websites;
 	private ExecutorService executor;
+	private ArrayList<Website> processedWebsites;
 	
 	public WebCrawler(int threadPoolSize) {
 		setWebsites(new ArrayBlockingQueue<Website>(1000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
-		addWebsite("http://www.gmit.ie");
 		initThreads(250);
 	}
 	
@@ -24,7 +25,7 @@ public class WebCrawler {
 				Runnable worker;
 				try {
 					// Take a website from the queue and attempt to start a new thread
-					worker = new WorkerThread(getWebsites().take());
+					worker = new WorkerThread(getWebsites().take(), processedWebsites);
 					executor.execute(worker);
 			        executor.shutdown();
 				} catch (InterruptedException error) {
@@ -41,7 +42,11 @@ public class WebCrawler {
 		}
 	}
 	
-	private void addWebsite(String url){
+	public void addWebsite(String url){
+		this.websites.offer(new Website(url));
+	}
+	
+	public void removeWebsite(String url){
 		this.websites.offer(new Website(url));
 	}
 	
@@ -49,7 +54,7 @@ public class WebCrawler {
 		return websites;
 	}
 
-	public void setWebsites(ArrayBlockingQueue<Website> websites) {
+	private void setWebsites(ArrayBlockingQueue<Website> websites) {
 		this.websites = websites;
 	}
 
@@ -57,7 +62,15 @@ public class WebCrawler {
 		return executor;
 	}
 
-	public void setExecutor(ExecutorService executor) {
+	private void setExecutor(ExecutorService executor) {
 		this.executor = executor;
+	}
+
+	public ArrayList<Website> getProcessedWebsites() {
+		return processedWebsites;
+	}
+
+	public void setProcessedWebsites(ArrayList<Website> processedWebsites) {
+		this.processedWebsites = processedWebsites;
 	}
 }

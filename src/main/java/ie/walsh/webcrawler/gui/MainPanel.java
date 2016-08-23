@@ -5,6 +5,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+
+import ie.walsh.webcrawler.app.WebCrawler;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -24,11 +27,14 @@ public class MainPanel extends JPanel {
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
 	private DefaultListModel<String> urlListModel;
 	
+	private WebCrawler wCrawl;
+	
 	public MainPanel() {
 		setLayout(null);
 		setupURLPanel();
 		setupURLListPanel();
 		setupURLDetailsPanel();
+		wCrawl = new WebCrawler(4);
 	}
 
 	private void setupURLPanel() {
@@ -51,6 +57,7 @@ public class MainPanel extends JPanel {
 		btnAddURL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				urlListModel.addElement(txtAddURL.getText());
+				wCrawl.addWebsite(txtAddURL.getText());
 			}
 		});
 		btnAddURL.setBounds(589, 6, 129, 24);
@@ -114,6 +121,7 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					urlListModel.removeElementAt(urlList.getSelectedIndex());
+					wCrawl.getProcessedWebsites().remove(urlList.getSelectedIndex());
 				}catch(Exception error){
 					System.out.println("Error - " + error);
 				}
