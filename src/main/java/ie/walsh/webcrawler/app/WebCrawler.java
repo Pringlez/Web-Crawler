@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class WebCrawler {
+public class WebCrawler implements Runnable {
 
 	private BlockingQueue<Website> websites;
 	private ExecutorService executor;
@@ -15,6 +15,12 @@ public class WebCrawler {
 	public WebCrawler(int threadPoolSize) {
 		setWebsites(new ArrayBlockingQueue<Website>(1000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
+		setProcessedWebsites(new ArrayList<Website>());
+		(new Thread(this)).start();
+	}
+	
+	@Override
+	public void run() {
 		initThreads(250);
 	}
 	

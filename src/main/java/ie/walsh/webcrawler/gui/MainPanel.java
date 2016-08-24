@@ -107,8 +107,9 @@ public class MainPanel extends JPanel {
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				wCrawl.getProcessedWebsites().clear();
 				for(int i = 0; i < urlListModel.size(); i++){
-					
+					wCrawl.addWebsite(urlListModel.getElementAt(i));
 				}
 			}
 		});
@@ -135,6 +136,7 @@ public class MainPanel extends JPanel {
 		btnClearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				urlListModel.clear();
+				wCrawl.getProcessedWebsites().clear();
 			}
 		});
 		btnClearList.setBounds(243, 339, 107, 26);

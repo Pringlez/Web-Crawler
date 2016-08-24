@@ -1,6 +1,6 @@
 package ie.walsh.webcrawler;
 
-import ie.walsh.webcrawler.app.WebCrawler;
+import ie.walsh.webcrawler.gui.*;
 
 public class Runner {
 
@@ -11,6 +11,6 @@ public class Runner {
 		 * 4 = Four Core Processor
 		 * 8 = Eight Core Processor
 		 */
-		new WebCrawler(4);
+		new WebCrawler();
 	}
 }

@@ -15,11 +15,6 @@ public class WorkerThread implements Runnable {
     private Elements links;
     private ArrayList<Website> processedWebsites;
 	
-	public WorkerThread(Website website) {
-		setWebsite(website);
-		initCrawl(website.getUrl());
-	}
-	
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites) {
 		setWebsite(website);
 		initCrawl(website.getUrl());
