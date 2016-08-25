@@ -25,6 +25,9 @@ public class WebCrawler implements Runnable {
 	}
 	
 	private void initThreads(int delayMS){
+		
+		int count = 0;
+		
 		// Keep looping & check the queue for any websites to process
 		while(true){
 			if(!getWebsites().isEmpty()){
@@ -33,8 +36,7 @@ public class WebCrawler implements Runnable {
 					// Take a website from the queue and attempt to start a new thread
 					worker = new WorkerThread(getWebsites().take(), processedWebsites);
 					executor.execute(worker);
-			        executor.shutdown();
-				} catch (InterruptedException error) {
+				} catch (Exception error) {
 					System.out.println("Error - " + error);
 				}
 			}
@@ -42,7 +44,8 @@ public class WebCrawler implements Runnable {
 			// Delay the thread by certain time
 	        try {
 				Thread.sleep(delayMS);
-			} catch (InterruptedException error) {
+				System.out.println("Main Work Spawner - Running! " + ++count);
+			} catch (Exception error) {
 				System.out.println("Error - " + error);
 			}
 		}
@@ -53,7 +56,7 @@ public class WebCrawler implements Runnable {
 	}
 	
 	public void removeWebsite(String url){
-		this.websites.offer(new Website(url));
+		this.websites.remove(new Website(url));
 	}
 	
 	public BlockingQueue<Website> getWebsites() {

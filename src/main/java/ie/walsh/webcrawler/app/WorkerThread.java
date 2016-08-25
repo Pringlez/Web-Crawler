@@ -23,6 +23,7 @@ public class WorkerThread implements Runnable {
 	
 	private void initCrawl(String url) {
 		try {
+			url = checkURL(url);
 			this.doc = Jsoup.connect(url).get();
 			this.links = doc.select("a");
 		} catch (IOException error) {
@@ -30,24 +31,40 @@ public class WorkerThread implements Runnable {
 		}
 	}
 
+	private String checkURL(String url) {
+		try {
+			if(!url.isEmpty() && url != null){
+				if(url.substring(0, 8).equals("https://")){
+					url = "http://" + url.substring(8, url.length());
+				}
+				else if(!url.substring(0, 7).equals("http://")){
+					url = "http://" + url;
+				}
+			}
+		} catch (Exception error) {
+			System.out.println("URL Error - " + error);
+		}
+		return url;
+	}
+
 	@Override
 	public void run() {
-		try {
-			crawlSite(getWebsite().getUrl());
-			getProcessedWebsites().add(getWebsite());
-		} catch (IOException error) {
-			System.out.println("Error - " + error);
-		}
+		crawlSite(getWebsite().getUrl());
+		getProcessedWebsites().add(getWebsite());
 	}
 	
-	private void crawlSite(String url) throws IOException {
-        for (Element link : this.links) {
-            if(!url.contains(link.attr("abs:href"))) {
-            	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
-            	System.out.println("Site: " + url + " has " + getWebsite().getHyperLinkCount() + " links");
-            	//crawlSite(link.attr("href"));
-            }
-        }
+	private void crawlSite(String url) {
+        try {
+			for (Element link : this.links) {
+			    if(!url.contains(link.attr("abs:href"))) {
+			    	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
+			    	System.out.println("Site: " + url + " has " + getWebsite().getHyperLinkCount() + " links");
+			    	//crawlSite(link.attr("href"));
+			    }
+			}
+		} catch (Exception error) {
+			System.out.println("Error - " + error);
+		}
     }
 
 	public Website getWebsite() {

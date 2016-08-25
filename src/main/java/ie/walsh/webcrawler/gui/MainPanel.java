@@ -6,6 +6,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import org.jsoup.Jsoup;
+
 import ie.walsh.webcrawler.app.WebCrawler;
 
 import javax.swing.BorderFactory;
@@ -56,8 +58,39 @@ public class MainPanel extends JPanel {
 		JButton btnAddURL = new JButton("Add to Queue");
 		btnAddURL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				urlListModel.addElement(txtAddURL.getText());
-				wCrawl.addWebsite(txtAddURL.getText());
+				if(!txtAddURL.getText().isEmpty()){
+					if(isURLGood(txtAddURL.getText())){
+						wCrawl.addWebsite(txtAddURL.getText());
+						urlListModel.addElement(txtAddURL.getText());
+					}
+				}
+			}
+
+			private boolean isURLGood(String url) {
+				try {
+					url = checkURL(url);
+					Jsoup.connect(url).get();
+				    return true;
+				} catch (Exception error) {
+					System.out.println("Error - " + error);
+					return false;
+				}
+			}
+			
+			private String checkURL(String url) {
+				try {
+					if(!url.isEmpty() && url != null){
+						if(url.substring(0, 8).equals("https://")){
+							url = "http://" + url.substring(8, url.length());
+						}
+						else if(!url.substring(0, 7).equals("http://")){
+							url = "http://" + url;
+						}
+					}
+				} catch (Exception error) {
+					System.out.println("URL Error - " + error);
+				}
+				return url;
 			}
 		});
 		btnAddURL.setBounds(589, 6, 129, 24);
