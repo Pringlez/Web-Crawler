@@ -7,5 +7,6 @@ ie\walsh\webcrawler\Runner.class
 ie\walsh\webcrawler\gui\MainPanel.class
 ie\walsh\webcrawler\gui\MainPanel$4.class
 ie\walsh\webcrawler\gui\MainPanel$1.class
+ie\walsh\webcrawler\gui\MainPanel$6.class
 ie\walsh\webcrawler\app\Website.class
 ie\walsh\webcrawler\app\WorkerThread.class

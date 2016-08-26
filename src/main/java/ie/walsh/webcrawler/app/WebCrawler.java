@@ -24,9 +24,9 @@ public class WebCrawler implements Runnable {
 		initThreads(250);
 	}
 	
-	private void initThreads(int delayMS){
+	private void initThreads(int delayMS) {
 		
-		int count = 0;
+		//int count = 0;
 		
 		// Keep looping & check the queue for any websites to process
 		while(true){
@@ -38,15 +38,17 @@ public class WebCrawler implements Runnable {
 					executor.execute(worker);
 				} catch (Exception error) {
 					System.out.println("Error - " + error);
+					error.printStackTrace();
 				}
 			}
 			
 			// Delay the thread by certain time
 	        try {
 				Thread.sleep(delayMS);
-				System.out.println("Main Work Spawner - Running! " + ++count);
+				//System.out.println("Main Work Spawner - Running! " + ++count);
 			} catch (Exception error) {
 				System.out.println("Error - " + error);
+				error.printStackTrace();
 			}
 		}
 	}

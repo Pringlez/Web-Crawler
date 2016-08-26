@@ -33,16 +33,16 @@ public class WorkerThread implements Runnable {
 
 	private String checkURL(String url) {
 		try {
-			if(!url.isEmpty() && url != null){
-				if(url.substring(0, 8).equals("https://")){
+			if(!url.contains("http://")){
+				if(url.contains("https://")){
 					url = "http://" + url.substring(8, url.length());
 				}
-				else if(!url.substring(0, 7).equals("http://")){
+				else{
 					url = "http://" + url;
 				}
 			}
 		} catch (Exception error) {
-			System.out.println("URL Error - " + error);
+			System.out.println("URL Check Error - " + error);
 		}
 		return url;
 	}

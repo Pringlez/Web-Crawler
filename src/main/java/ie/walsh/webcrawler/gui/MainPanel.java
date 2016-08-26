@@ -20,6 +20,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class MainPanel extends JPanel {
 	
@@ -28,6 +30,8 @@ public class MainPanel extends JPanel {
 	private Font myFont = new Font("Serif", Font.BOLD, 14);
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
 	private DefaultListModel<String> urlListModel;
+	
+	private JLabel lblErrorStatus;
 	
 	private WebCrawler wCrawl;
 	
@@ -58,10 +62,17 @@ public class MainPanel extends JPanel {
 		JButton btnAddURL = new JButton("Add to Queue");
 		btnAddURL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lblErrorStatus.setText("");
 				if(!txtAddURL.getText().isEmpty()){
 					if(isURLGood(txtAddURL.getText())){
 						wCrawl.addWebsite(txtAddURL.getText());
 						urlListModel.addElement(txtAddURL.getText());
+						txtAddURL.setText("");
+						lblErrorStatus.setText("URL Added!");
+					}
+					else{
+						txtAddURL.requestFocus();
+						lblErrorStatus.setText("URL Error!");
 					}
 				}
 			}
@@ -79,17 +90,18 @@ public class MainPanel extends JPanel {
 			
 			private String checkURL(String url) {
 				try {
-					if(!url.isEmpty() && url != null){
-						if(url.substring(0, 8).equals("https://")){
+					if(!url.contains("http://")){
+						if(url.contains("https://")){
 							url = "http://" + url.substring(8, url.length());
 						}
-						else if(!url.substring(0, 7).equals("http://")){
+						else{
 							url = "http://" + url;
 						}
 					}
 				} catch (Exception error) {
-					System.out.println("URL Error - " + error);
+					System.out.println("URL Check Error - " + error);
 				}
+				System.out.println("URL: " + url);
 				return url;
 			}
 		});
@@ -102,6 +114,11 @@ public class MainPanel extends JPanel {
 		optionsPanel.setBounds(10, 467, 726, 38);
 		optionsPanel.setBorder(bGreyLine);
 		add(optionsPanel);
+		
+		lblErrorStatus = new JLabel("Error HTTP Problem");
+		lblErrorStatus.setBounds(8, 8, 150, 19);
+		lblErrorStatus.setFont(myFont);
+		optionsPanel.add(lblErrorStatus);
 		
 		JButton btnExitApp = new JButton("Exit");
 		btnExitApp.addActionListener(new ActionListener() {
@@ -127,6 +144,11 @@ public class MainPanel extends JPanel {
 		urlListModel = new DefaultListModel<String>();
 		
 		final JList<String> urlList = new JList<String>(urlListModel);
+		urlList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				System.out.println("Testing");
+			}
+		});
 		urlList.setBounds(10, 26, 340, 306);
 		urlList.setBorder(bGreyLine);
 		urlList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
