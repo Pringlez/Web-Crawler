@@ -9,6 +9,7 @@ import javax.swing.border.TitledBorder;
 import org.jsoup.Jsoup;
 
 import ie.walsh.webcrawler.app.WebCrawler;
+import ie.walsh.webcrawler.app.Website;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -19,6 +20,7 @@ import javax.swing.JList;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -27,20 +29,34 @@ public class MainPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
+	// Global font type & size
 	private Font myFont = new Font("Serif", Font.BOLD, 14);
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
 	private DefaultListModel<String> urlListModel;
 	
+	// Errors status label
 	private JLabel lblErrorStatus;
 	
+	// Website details panel
+	private JLabel lblURLNameTxt;
+	private JLabel lblURLHyperLinksTxt;
+	private JLabel lblURLProcessTimeTxt;
+	private JLabel lblURLDepthTxt;
+	private JLabel lblURLExternalLinksTxt;
+	private JLabel lblURLJavaScriptFilesTxt;
+	private JLabel lblURLCSSFilesTxt;
+	
+	// Web crawler app & variables
 	private WebCrawler wCrawl;
+	private ArrayList<Website> processedWebsites;
 	
 	public MainPanel() {
 		setLayout(null);
 		setupURLPanel();
 		setupURLListPanel();
 		setupURLDetailsPanel();
-		wCrawl = new WebCrawler(4);
+		setProcessedWebsites(new ArrayList<Website>());
+		wCrawl = new WebCrawler(4, processedWebsites);
 	}
 
 	private void setupURLPanel() {
@@ -146,7 +162,7 @@ public class MainPanel extends JPanel {
 		final JList<String> urlList = new JList<String>(urlListModel);
 		urlList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				System.out.println("Testing");
+				setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
 			}
 		});
 		urlList.setBounds(10, 26, 340, 306);
@@ -219,7 +235,7 @@ public class MainPanel extends JPanel {
 		lblURLName.setFont(myFont);
 		urlDetailsPanel.add(lblURLName);
 		
-		JLabel lblURLNameTxt = new JLabel();
+		lblURLNameTxt = new JLabel();
 		lblURLNameTxt.setBounds(108, 35, 236, 20);
 		lblURLNameTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLNameTxt);
@@ -229,7 +245,7 @@ public class MainPanel extends JPanel {
 		lblURLHyperLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLHyperLinks);
 		
-		JLabel lblURLHyperLinksTxt = new JLabel();
+		lblURLHyperLinksTxt = new JLabel();
 		lblURLHyperLinksTxt.setBounds(75, 75, 268, 20);
 		lblURLHyperLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLHyperLinksTxt);
@@ -239,7 +255,7 @@ public class MainPanel extends JPanel {
 		lblURLProcessTime.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTime);
 		
-		JLabel lblURLProcessTimeTxt = new JLabel();
+		lblURLProcessTimeTxt = new JLabel();
 		lblURLProcessTimeTxt.setBounds(121, 115, 221, 20);
 		lblURLProcessTimeTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTimeTxt);
@@ -249,7 +265,7 @@ public class MainPanel extends JPanel {
 		lblURLDepth.setFont(myFont);
 		urlDetailsPanel.add(lblURLDepth);
 		
-		JLabel lblURLDepthTxt = new JLabel();
+		lblURLDepthTxt = new JLabel();
 		lblURLDepthTxt.setBounds(108, 155, 234, 20);
 		lblURLDepthTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLDepthTxt);
@@ -259,7 +275,7 @@ public class MainPanel extends JPanel {
 		lblURLExternalLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinks);
 		
-		JLabel lblURLExternalLinksTxt = new JLabel();
+		lblURLExternalLinksTxt = new JLabel();
 		lblURLExternalLinksTxt.setBounds(130, 205, 212, 20);
 		lblURLExternalLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinksTxt);
@@ -269,7 +285,7 @@ public class MainPanel extends JPanel {
 		lblURLJavaScriptFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFiles);
 		
-		JLabel lblURLJavaScriptFilesTxt = new JLabel();
+		lblURLJavaScriptFilesTxt = new JLabel();
 		lblURLJavaScriptFilesTxt.setBounds(135, 245, 207, 20);
 		lblURLJavaScriptFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFilesTxt);
@@ -279,9 +295,27 @@ public class MainPanel extends JPanel {
 		lblURLCSSFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFiles);
 		
-		JLabel lblURLCSSFilesTxt = new JLabel();
+		lblURLCSSFilesTxt = new JLabel();
 		lblURLCSSFilesTxt.setBounds(98, 285, 244, 20);
 		lblURLCSSFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFilesTxt);
+	}
+
+	public ArrayList<Website> getProcessedWebsites() {
+		return processedWebsites;
+	}
+
+	public void setProcessedWebsites(ArrayList<Website> processedWebsites) {
+		this.processedWebsites = processedWebsites;
+	}
+	
+	private void setWebsiteDetails(Website website){
+		this.lblURLNameTxt.setText(website.getUrl());
+		this.lblURLHyperLinksTxt.setText(Integer.toString(website.getHyperLinkCount()));
+		this.lblURLProcessTimeTxt.setText(Integer.toString(website.getProcessTime()));
+		this.lblURLDepthTxt.setText(Integer.toString(website.getUrlDepth()));
+		this.lblURLExternalLinksTxt.setText(Integer.toString(website.getExternalLinkCount()));
+		this.lblURLJavaScriptFilesTxt.setText(Integer.toString(website.getJsFileCount()));
+		this.lblURLCSSFilesTxt.setText(Integer.toString(website.getCssFileCount()));
 	}
 }

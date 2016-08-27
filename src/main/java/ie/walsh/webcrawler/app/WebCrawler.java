@@ -12,10 +12,10 @@ public class WebCrawler implements Runnable {
 	private ExecutorService executor;
 	private ArrayList<Website> processedWebsites;
 	
-	public WebCrawler(int threadPoolSize) {
+	public WebCrawler(int threadPoolSize, ArrayList<Website> processedWebsites) {
 		setWebsites(new ArrayBlockingQueue<Website>(1000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
-		setProcessedWebsites(new ArrayList<Website>());
+		setProcessedWebsites(processedWebsites);
 		(new Thread(this)).start();
 	}
 	
@@ -81,7 +81,7 @@ public class WebCrawler implements Runnable {
 		return processedWebsites;
 	}
 
-	public void setProcessedWebsites(ArrayList<Website> processedWebsites) {
+	private void setProcessedWebsites(ArrayList<Website> processedWebsites) {
 		this.processedWebsites = processedWebsites;
 	}
 }
