@@ -46,6 +46,9 @@ public class MainPanel extends JPanel {
 	private JLabel lblURLJavaScriptFilesTxt;
 	private JLabel lblURLCSSFilesTxt;
 	
+	// Processing bar
+	private JProgressBar progressBar;
+	
 	// Web crawler app & variables
 	private WebCrawler wCrawl;
 	private ArrayList<Website> processedWebsites;
@@ -56,7 +59,7 @@ public class MainPanel extends JPanel {
 		setupURLListPanel();
 		setupURLDetailsPanel();
 		setProcessedWebsites(new ArrayList<Website>());
-		wCrawl = new WebCrawler(4, processedWebsites);
+		wCrawl = new WebCrawler(4, processedWebsites, progressBar);
 	}
 
 	private void setupURLPanel() {
@@ -81,6 +84,7 @@ public class MainPanel extends JPanel {
 				lblErrorStatus.setText("");
 				if(!txtAddURL.getText().isEmpty()){
 					if(isURLGood(txtAddURL.getText())){
+						progressBar.setValue(33);
 						wCrawl.addWebsite(txtAddURL.getText());
 						urlListModel.addElement(txtAddURL.getText());
 						txtAddURL.setText("");
@@ -131,7 +135,7 @@ public class MainPanel extends JPanel {
 		optionsPanel.setBorder(bGreyLine);
 		add(optionsPanel);
 		
-		lblErrorStatus = new JLabel("Error HTTP Problem");
+		lblErrorStatus = new JLabel();
 		lblErrorStatus.setBounds(8, 8, 150, 19);
 		lblErrorStatus.setFont(myFont);
 		optionsPanel.add(lblErrorStatus);
@@ -162,6 +166,7 @@ public class MainPanel extends JPanel {
 		final JList<String> urlList = new JList<String>(urlListModel);
 		urlList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
+				System.out.println("Test - " + urlList.getSelectedIndex());
 				setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
 			}
 		});
@@ -179,9 +184,11 @@ public class MainPanel extends JPanel {
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wCrawl.getProcessedWebsites().clear();
+				progressBar.setValue(10);
 				for(int i = 0; i < urlListModel.size(); i++){
 					wCrawl.addWebsite(urlListModel.getElementAt(i));
 				}
+				progressBar.setValue(100);
 			}
 		});
 		btnReProcess.setBounds(10, 339, 107, 26);
@@ -214,8 +221,9 @@ public class MainPanel extends JPanel {
 		btnClearList.setFont(myFont);
 		urlListPanel.add(btnClearList);
 		
-		JProgressBar progressBar = new JProgressBar();
+		progressBar = new JProgressBar();
 		progressBar.setBounds(10, 372, 340, 23);
+		progressBar.setStringPainted(true);
 		urlListPanel.add(progressBar);
 	}
 	
@@ -271,32 +279,32 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLDepthTxt);
 		
 		JLabel lblURLExternalLinks = new JLabel("External Links:");
-		lblURLExternalLinks.setBounds(20, 205, 110, 20);
+		lblURLExternalLinks.setBounds(20, 195, 110, 20);
 		lblURLExternalLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinks);
 		
 		lblURLExternalLinksTxt = new JLabel();
-		lblURLExternalLinksTxt.setBounds(130, 205, 212, 20);
+		lblURLExternalLinksTxt.setBounds(130, 195, 212, 20);
 		lblURLExternalLinksTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLExternalLinksTxt);
 		
 		JLabel lblURLJavaScriptFiles = new JLabel("JavaScript Files:");
-		lblURLJavaScriptFiles.setBounds(20, 245, 115, 20);
+		lblURLJavaScriptFiles.setBounds(20, 235, 115, 20);
 		lblURLJavaScriptFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFiles);
 		
 		lblURLJavaScriptFilesTxt = new JLabel();
-		lblURLJavaScriptFilesTxt.setBounds(135, 245, 207, 20);
+		lblURLJavaScriptFilesTxt.setBounds(135, 235, 207, 20);
 		lblURLJavaScriptFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFilesTxt);
 		
 		JLabel lblURLCSSFiles = new JLabel("CSS Files:");
-		lblURLCSSFiles.setBounds(20, 285, 78, 20);
+		lblURLCSSFiles.setBounds(20, 275, 78, 20);
 		lblURLCSSFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFiles);
 		
 		lblURLCSSFilesTxt = new JLabel();
-		lblURLCSSFilesTxt.setBounds(98, 285, 244, 20);
+		lblURLCSSFilesTxt.setBounds(98, 275, 244, 20);
 		lblURLCSSFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFilesTxt);
 	}

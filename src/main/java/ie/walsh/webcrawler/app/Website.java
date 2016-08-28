@@ -9,6 +9,7 @@ public class Website {
 	private int externalLinkCount;
 	private int jsFileCount;
 	private int cssFileCount;
+	private boolean initProcess;
 	
 	public Website() {	
 	}
@@ -71,5 +72,13 @@ public class Website {
 
 	public void setCssFileCount(int cssFileCount) {
 		this.cssFileCount = cssFileCount;
+	}
+
+	public boolean isInitProcess() {
+		return initProcess;
+	}
+
+	public void setInitProcess(boolean initProcess) {
+		this.initProcess = initProcess;
 	}
 }

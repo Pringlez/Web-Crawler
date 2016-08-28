@@ -6,16 +6,22 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JProgressBar;
+
 public class WebCrawler implements Runnable {
 
 	private BlockingQueue<Website> websites;
 	private ExecutorService executor;
 	private ArrayList<Website> processedWebsites;
 	
-	public WebCrawler(int threadPoolSize, ArrayList<Website> processedWebsites) {
-		setWebsites(new ArrayBlockingQueue<Website>(1000));
+	// Processing bar
+	private JProgressBar progressBar;
+	
+	public WebCrawler(int threadPoolSize, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
+		setWebsites(new ArrayBlockingQueue<Website>(5000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
 		setProcessedWebsites(processedWebsites);
+		setProgressBar(progressBar);
 		(new Thread(this)).start();
 	}
 	
@@ -34,7 +40,7 @@ public class WebCrawler implements Runnable {
 				Runnable worker;
 				try {
 					// Take a website from the queue and attempt to start a new thread
-					worker = new WorkerThread(getWebsites().take(), processedWebsites);
+					worker = new WorkerThread(getWebsites().take(), processedWebsites, progressBar);
 					executor.execute(worker);
 				} catch (Exception error) {
 					System.out.println("Error - " + error);
@@ -83,5 +89,13 @@ public class WebCrawler implements Runnable {
 
 	private void setProcessedWebsites(ArrayList<Website> processedWebsites) {
 		this.processedWebsites = processedWebsites;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	private void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 }

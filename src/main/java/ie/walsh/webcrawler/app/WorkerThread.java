@@ -3,6 +3,8 @@ package ie.walsh.webcrawler.app;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JProgressBar;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,11 +16,15 @@ public class WorkerThread implements Runnable {
 	private Document doc;
     private Elements links;
     private ArrayList<Website> processedWebsites;
+    
+ // Processing bar
+ 	private JProgressBar progressBar;
 	
-	public WorkerThread(Website website, ArrayList<Website> processedWebsites) {
+	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsite(website);
 		initCrawl(website.getUrl());
 		setProcessedWebsites(processedWebsites);
+		setProgressBar(progressBar);
 	}
 	
 	private void initCrawl(String url) {
@@ -50,7 +56,6 @@ public class WorkerThread implements Runnable {
 	@Override
 	public void run() {
 		crawlSite(getWebsite().getUrl());
-		getProcessedWebsites().add(getWebsite());
 	}
 	
 	private void crawlSite(String url) {
@@ -62,24 +67,39 @@ public class WorkerThread implements Runnable {
 			    	//crawlSite(link.attr("href"));
 			    }
 			}
+			
+			getProgressBar().setValue(100);
+			
+		    if(!getWebsite().isInitProcess()){
+				getProcessedWebsites().add(getWebsite());
+				getWebsite().setInitProcess(true);
+		    }
 		} catch (Exception error) {
 			System.out.println("Error - " + error);
 		}
     }
 
-	public Website getWebsite() {
+	private Website getWebsite() {
 		return website;
 	}
 
-	public void setWebsite(Website website) {
+	private void setWebsite(Website website) {
 		this.website = website;
 	}
 
-	public ArrayList<Website> getProcessedWebsites() {
+	private ArrayList<Website> getProcessedWebsites() {
 		return processedWebsites;
 	}
 
-	public void setProcessedWebsites(ArrayList<Website> processedWebsites) {
+	private void setProcessedWebsites(ArrayList<Website> processedWebsites) {
 		this.processedWebsites = processedWebsites;
+	}
+	
+	private JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	private void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 }
