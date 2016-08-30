@@ -17,7 +17,7 @@ public class WorkerThread implements Runnable {
     private Elements links;
     private ArrayList<Website> processedWebsites;
     
- // Processing bar
+    // Processing bar
  	private JProgressBar progressBar;
 	
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
@@ -33,7 +33,7 @@ public class WorkerThread implements Runnable {
 			this.doc = Jsoup.connect(url).get();
 			this.links = doc.select("a");
 		} catch (IOException error) {
-			System.out.println("Error - " + error);
+			System.out.println("Init Crawl Error - " + error);
 		}
 	}
 
@@ -60,14 +60,16 @@ public class WorkerThread implements Runnable {
 	
 	private void crawlSite(String url) {
         try {
+        	long startTime = System.currentTimeMillis();
 			for (Element link : this.links) {
 			    if(!url.contains(link.attr("abs:href"))) {
 			    	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
-			    	System.out.println("Site: " + url + " has " + getWebsite().getHyperLinkCount() + " links");
 			    	//crawlSite(link.attr("href"));
 			    }
 			}
 			
+			System.out.println("\nSite: " + url + " has " + getWebsite().getHyperLinkCount() + " Links");
+			getWebsite().setProcessTime((int)((System.currentTimeMillis() - startTime)));
 			getProgressBar().setValue(100);
 			
 		    if(!getWebsite().isInitProcess()){
@@ -75,7 +77,7 @@ public class WorkerThread implements Runnable {
 				getWebsite().setInitProcess(true);
 		    }
 		} catch (Exception error) {
-			System.out.println("Error - " + error);
+			System.out.println("Site Crawl Error - " + error);
 		}
     }
 

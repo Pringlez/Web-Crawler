@@ -88,7 +88,7 @@ public class MainPanel extends JPanel {
 						wCrawl.addWebsite(txtAddURL.getText());
 						urlListModel.addElement(txtAddURL.getText());
 						txtAddURL.setText("");
-						lblErrorStatus.setText("URL Added!");
+						lblErrorStatus.setText("URL Processed!");
 					}
 					else{
 						txtAddURL.requestFocus();
@@ -166,7 +166,6 @@ public class MainPanel extends JPanel {
 		final JList<String> urlList = new JList<String>(urlListModel);
 		urlList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				System.out.println("Test - " + urlList.getSelectedIndex());
 				setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
 			}
 		});
@@ -320,7 +319,7 @@ public class MainPanel extends JPanel {
 	private void setWebsiteDetails(Website website){
 		this.lblURLNameTxt.setText(website.getUrl());
 		this.lblURLHyperLinksTxt.setText(Integer.toString(website.getHyperLinkCount()));
-		this.lblURLProcessTimeTxt.setText(Integer.toString(website.getProcessTime()));
+		this.lblURLProcessTimeTxt.setText(Integer.toString(website.getProcessTime()) + "ms");
 		this.lblURLDepthTxt.setText(Integer.toString(website.getUrlDepth()));
 		this.lblURLExternalLinksTxt.setText(Integer.toString(website.getExternalLinkCount()));
 		this.lblURLJavaScriptFilesTxt.setText(Integer.toString(website.getJsFileCount()));

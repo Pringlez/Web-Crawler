@@ -43,7 +43,7 @@ public class WebCrawler implements Runnable {
 					worker = new WorkerThread(getWebsites().take(), processedWebsites, progressBar);
 					executor.execute(worker);
 				} catch (Exception error) {
-					System.out.println("Error - " + error);
+					System.out.println("Init Thread Error - " + error);
 					error.printStackTrace();
 				}
 			}
@@ -53,7 +53,7 @@ public class WebCrawler implements Runnable {
 				Thread.sleep(delayMS);
 				//System.out.println("Main Work Spawner - Running! " + ++count);
 			} catch (Exception error) {
-				System.out.println("Error - " + error);
+				System.out.println("Sleep Thread Error - " + error);
 				error.printStackTrace();
 			}
 		}
