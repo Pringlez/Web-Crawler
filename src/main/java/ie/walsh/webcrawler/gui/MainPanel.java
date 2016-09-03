@@ -6,10 +6,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import org.jsoup.Jsoup;
-
 import ie.walsh.webcrawler.app.WebCrawler;
 import ie.walsh.webcrawler.app.Website;
+import ie.walsh.webcrawler.gui.func.AddURL;
+import ie.walsh.webcrawler.gui.func.ReprocessURL;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -29,6 +29,9 @@ public class MainPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
+	// The main panel
+	private MainPanel mainPanel;
+	
 	// Global font type & size
 	private Font myFont = new Font("Serif", Font.BOLD, 14);
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
@@ -46,6 +49,9 @@ public class MainPanel extends JPanel {
 	private JLabel lblURLJavaScriptFilesTxt;
 	private JLabel lblURLCSSFilesTxt;
 	
+	// Add URL
+	private JTextField txtAddURL;
+	
 	// Processing bar
 	private JProgressBar progressBar;
 	
@@ -55,6 +61,7 @@ public class MainPanel extends JPanel {
 	
 	public MainPanel() {
 		setLayout(null);
+		setMainPanel(this);
 		setupURLPanel();
 		setupURLListPanel();
 		setupURLDetailsPanel();
@@ -74,55 +81,14 @@ public class MainPanel extends JPanel {
 		lblAddURL.setFont(myFont);
 		insertURLPanel.add(lblAddURL);
 		
-		final JTextField txtAddURL = new JTextField();
+		txtAddURL = new JTextField();
 		txtAddURL.setBounds(80, 6, 504, 25);
 		insertURLPanel.add(txtAddURL);
 		
 		JButton btnAddURL = new JButton("Add to Queue");
 		btnAddURL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				lblErrorStatus.setText("");
-				if(!txtAddURL.getText().isEmpty()){
-					if(isURLGood(txtAddURL.getText())){
-						progressBar.setValue(33);
-						wCrawl.addWebsite(txtAddURL.getText());
-						urlListModel.addElement(txtAddURL.getText());
-						txtAddURL.setText("");
-						lblErrorStatus.setText("URL Processed!");
-					}
-					else{
-						txtAddURL.requestFocus();
-						lblErrorStatus.setText("URL Error!");
-					}
-				}
-			}
-
-			private boolean isURLGood(String url) {
-				try {
-					url = checkURL(url);
-					Jsoup.connect(url).get();
-				    return true;
-				} catch (Exception error) {
-					System.out.println("Error - " + error);
-					return false;
-				}
-			}
-			
-			private String checkURL(String url) {
-				try {
-					if(!url.contains("http://")){
-						if(url.contains("https://")){
-							url = "http://" + url.substring(8, url.length());
-						}
-						else{
-							url = "http://" + url;
-						}
-					}
-				} catch (Exception error) {
-					System.out.println("URL Check Error - " + error);
-				}
-				System.out.println("URL: " + url);
-				return url;
+				new Thread(new AddURL(getMainPanel())).start();
 			}
 		});
 		btnAddURL.setBounds(589, 6, 129, 24);
@@ -182,12 +148,7 @@ public class MainPanel extends JPanel {
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				wCrawl.getProcessedWebsites().clear();
-				progressBar.setValue(10);
-				for(int i = 0; i < urlListModel.size(); i++){
-					wCrawl.addWebsite(urlListModel.getElementAt(i));
-				}
-				progressBar.setValue(100);
+				new Thread(new ReprocessURL(getMainPanel())).start();
 			}
 		});
 		btnReProcess.setBounds(10, 339, 107, 26);
@@ -308,11 +269,75 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLCSSFilesTxt);
 	}
 
+	private void setMainPanel(MainPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+	private MainPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public Font getMyFont() {
+		return myFont;
+	}
+
+	public Border getbGreyLine() {
+		return bGreyLine;
+	}
+
+	public DefaultListModel<String> getUrlListModel() {
+		return urlListModel;
+	}
+
+	public JLabel getLblErrorStatus() {
+		return lblErrorStatus;
+	}
+
+	public JLabel getLblURLNameTxt() {
+		return lblURLNameTxt;
+	}
+
+	public JLabel getLblURLHyperLinksTxt() {
+		return lblURLHyperLinksTxt;
+	}
+
+	public JLabel getLblURLProcessTimeTxt() {
+		return lblURLProcessTimeTxt;
+	}
+
+	public JLabel getLblURLDepthTxt() {
+		return lblURLDepthTxt;
+	}
+
+	public JLabel getLblURLExternalLinksTxt() {
+		return lblURLExternalLinksTxt;
+	}
+
+	public JLabel getLblURLJavaScriptFilesTxt() {
+		return lblURLJavaScriptFilesTxt;
+	}
+
+	public JLabel getLblURLCSSFilesTxt() {
+		return lblURLCSSFilesTxt;
+	}
+
+	public JTextField getTxtAddURL() {
+		return txtAddURL;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public WebCrawler getwCrawl() {
+		return wCrawl;
+	}
+
 	public ArrayList<Website> getProcessedWebsites() {
 		return processedWebsites;
 	}
 
-	public void setProcessedWebsites(ArrayList<Website> processedWebsites) {
+	private void setProcessedWebsites(ArrayList<Website> processedWebsites) {
 		this.processedWebsites = processedWebsites;
 	}
 	
