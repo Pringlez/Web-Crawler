@@ -31,9 +31,6 @@ public class WebCrawler implements Runnable {
 	}
 	
 	private void initThreads(int delayMS) {
-		
-		//int count = 0;
-		
 		// Keep looping & check the queue for any websites to process
 		while(true){
 			if(!getWebsites().isEmpty()){
@@ -47,11 +44,9 @@ public class WebCrawler implements Runnable {
 					error.printStackTrace();
 				}
 			}
-			
 			// Delay the thread by certain time
 	        try {
 				Thread.sleep(delayMS);
-				//System.out.println("Main Work Spawner - Running! " + ++count);
 			} catch (Exception error) {
 				System.out.println("Sleep Thread Error - " + error);
 				error.printStackTrace();

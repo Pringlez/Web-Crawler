@@ -19,21 +19,28 @@ public class WorkerThread implements Runnable {
     
     // Processing bar
  	private JProgressBar progressBar;
+ 	
+ 	// Work thread control
+ 	private boolean isCrawlable;
 	
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsite(website);
-		initCrawl(website.getUrl());
-		setProcessedWebsites(processedWebsites);
-		setProgressBar(progressBar);
+		if(initCrawl(website.getUrl())){
+			setProcessedWebsites(processedWebsites);
+			setProgressBar(progressBar);
+			setCrawlable(true);
+		}
 	}
 	
-	private void initCrawl(String url) {
+	private boolean initCrawl(String url) {
 		try {
 			url = checkURL(url);
 			this.doc = Jsoup.connect(url).get();
 			this.links = doc.select("a");
+			return true;
 		} catch (IOException error) {
 			System.out.println("Init Crawl Error - " + error);
+			return false;
 		}
 	}
 
@@ -55,20 +62,41 @@ public class WorkerThread implements Runnable {
 
 	@Override
 	public void run() {
-		crawlSite(getWebsite().getUrl());
+		if(isCrawlable())
+			crawlSite(getWebsite().getUrl());
 	}
 	
 	private void crawlSite(String url) {
         try {
         	long startTime = System.currentTimeMillis();
 			for (Element link : this.links) {
-			    if(!url.contains(link.attr("abs:href"))) {
+			    if(link.attr("abs:href").contains("http")){
 			    	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
 			    	//crawlSite(link.attr("href"));
 			    }
+			    if(!link.attr("abs:href").contains(url)){
+			    	getWebsite().setExternalLinkCount(getWebsite().getExternalLinkCount() + 1);
+			    }
+			    if(link.attr("abs:script").contains("")){
+			    	getWebsite().setJsFileCount(getWebsite().getJsFileCount() + 1);
+			    	System.out.println("Found JS: " + link.text());
+			    }
+			    if(link.attr("abs:link").contains("class")){
+			    	getWebsite().setCssFileCount(getWebsite().getCssFileCount() + 1);
+			    	System.out.println("Found CSS: " + link.text());
+			    }
+			    
+			    System.out.println("Link: " + link.text());
 			}
 			
+			// Console output
 			System.out.println("\nSite: " + url + " has " + getWebsite().getHyperLinkCount() + " Links");
+			System.out.println("\nSite: " + url + " was processed in " + getWebsite().getProcessTime() + " MS");
+			System.out.println("\nSite: " + url + " has depth of " + getWebsite().getUrlDepth() + " Levels");
+			System.out.println("\nSite: " + url + " has " + getWebsite().getExternalLinkCount() + " Exteral Links");
+			System.out.println("\nSite: " + url + " has " + getWebsite().getJsFileCount() + " JavaScript Files");
+			System.out.println("\nSite: " + url + " has " + getWebsite().getCssFileCount() + " CSS Files");
+			
 			getWebsite().setProcessTime((int)((System.currentTimeMillis() - startTime)));
 			getProgressBar().setValue(100);
 			
@@ -103,5 +131,13 @@ public class WorkerThread implements Runnable {
 
 	private void setProgressBar(JProgressBar progressBar) {
 		this.progressBar = progressBar;
+	}
+
+	private boolean isCrawlable() {
+		return isCrawlable;
+	}
+
+	private void setCrawlable(boolean isCrawlable) {
+		this.isCrawlable = isCrawlable;
 	}
 }
