@@ -13,8 +13,12 @@ import org.jsoup.select.Elements;
 public class WorkerThread implements Runnable {
 	
 	private Website website;
-	private Document doc;
-    private Elements links;
+	private Document webpageDoc;
+    private Elements aTags;
+    private Elements imageTags;
+    private Elements metaTags;
+    private Elements linkTags;
+    private Elements scriptTags;
     private ArrayList<Website> processedWebsites;
     
     // Processing bar
@@ -25,26 +29,14 @@ public class WorkerThread implements Runnable {
 	
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsite(website);
-		if(initCrawl(website.getUrl())){
+		if(isURLGood(website.getUrl())){
 			setProcessedWebsites(processedWebsites);
 			setProgressBar(progressBar);
 			setCrawlable(true);
 		}
 	}
 	
-	private boolean initCrawl(String url) {
-		try {
-			url = checkURL(url);
-			this.doc = Jsoup.connect(url).get();
-			this.links = doc.select("a");
-			return true;
-		} catch (IOException error) {
-			System.out.println("Init Crawl Error - " + error);
-			return false;
-		}
-	}
-
-	private String checkURL(String url) {
+	private boolean isURLGood(String url) {
 		try {
 			if(!url.contains("http://")){
 				if(url.contains("https://")){
@@ -54,10 +46,17 @@ public class WorkerThread implements Runnable {
 					url = "http://" + url;
 				}
 			}
-		} catch (Exception error) {
-			System.out.println("URL Check Error - " + error);
+			this.webpageDoc = Jsoup.connect(url).get();
+			this.aTags = webpageDoc.select("a");
+			this.imageTags = webpageDoc.select("image");
+			this.metaTags = webpageDoc.select("meta");
+			this.linkTags = webpageDoc.select("link");
+			this.scriptTags = webpageDoc.select("script");
+			return true;
+		} catch (IOException error) {
+			System.out.println("Init Crawl Error - " + error);
+			return false;
 		}
-		return url;
 	}
 
 	@Override
@@ -68,34 +67,38 @@ public class WorkerThread implements Runnable {
 	
 	private void crawlSite(String url) {
         try {
+        	// Start recording the processing time
         	long startTime = System.currentTimeMillis();
-			for (Element link : this.links) {
-			    if(link.attr("abs:href").contains("http")){
+        	
+			for (Element aTag : this.aTags) {
+			    if(aTag.attr("abs:href").contains("http")){
 			    	getWebsite().setHyperLinkCount(getWebsite().getHyperLinkCount() + 1);
-			    	//crawlSite(link.attr("href"));
 			    }
-			    if(!link.attr("abs:href").contains(url)){
-			    	getWebsite().setExternalLinkCount(getWebsite().getExternalLinkCount() + 1);
-			    }
-			    if(link.attr("abs:script").contains("")){
-			    	getWebsite().setJsFileCount(getWebsite().getJsFileCount() + 1);
-			    	System.out.println("Found JS: " + link.text());
-			    }
-			    if(link.attr("abs:link").contains("class")){
-			    	getWebsite().setCssFileCount(getWebsite().getCssFileCount() + 1);
-			    	System.out.println("Found CSS: " + link.text());
-			    }
-			    
-			    System.out.println("Link: " + link.text());
 			}
 			
-			// Console output
-			System.out.println("\nSite: " + url + " has " + getWebsite().getHyperLinkCount() + " Links");
-			System.out.println("\nSite: " + url + " was processed in " + getWebsite().getProcessTime() + " MS");
-			System.out.println("\nSite: " + url + " has depth of " + getWebsite().getUrlDepth() + " Levels");
-			System.out.println("\nSite: " + url + " has " + getWebsite().getExternalLinkCount() + " Exteral Links");
-			System.out.println("\nSite: " + url + " has " + getWebsite().getJsFileCount() + " JavaScript Files");
-			System.out.println("\nSite: " + url + " has " + getWebsite().getCssFileCount() + " CSS Files");
+			for (Element imageTag : this.imageTags) {
+				if(imageTag.attr("abs:src").contains("http")){
+			    	getWebsite().setImagesCount(getWebsite().getImagesCount() + 1);
+			    }
+			}
+			
+			for (Element metaTag : this.metaTags) {
+				if(!metaTag.attr("abs:content").isEmpty()){
+			    	getWebsite().setMetaDataCount(getWebsite().getMetaDataCount() + 1);
+			    }
+			}
+			
+			for (Element linkTag : this.linkTags) {
+				if(linkTag.attr("abs:href").contains("css")){
+			    	getWebsite().setCssFileCount(getWebsite().getCssFileCount() + 1);
+			    }
+			}
+			
+			for (Element scriptTag : this.scriptTags) {
+				if(scriptTag.attr("abs:type").contains("text/javascript")){
+			    	getWebsite().setJsFileCount(getWebsite().getJsFileCount() + 1);
+			    }
+			}
 			
 			getWebsite().setProcessTime((int)((System.currentTimeMillis() - startTime)));
 			getProgressBar().setValue(100);

@@ -36,17 +36,6 @@ public class AddURL implements Runnable {
 	
 	private boolean isURLGood(String url) {
 		try {
-			url = checkURL(url);
-			Jsoup.connect(url).get();
-		    return true;
-		} catch (Exception error) {
-			System.out.println("Error - " + error);
-			return false;
-		}
-	}
-	
-	private String checkURL(String url) {
-		try {
 			if(!url.contains("http://")){
 				if(url.contains("https://")){
 					url = "http://" + url.substring(8, url.length());
@@ -55,10 +44,11 @@ public class AddURL implements Runnable {
 					url = "http://" + url;
 				}
 			}
+			Jsoup.connect(url).get();
+		    return true;
 		} catch (Exception error) {
-			System.out.println("URL Check Error - " + error);
+			System.out.println("Error - " + error);
+			return false;
 		}
-		System.out.println("URL: " + url);
-		return url;
 	}
 }

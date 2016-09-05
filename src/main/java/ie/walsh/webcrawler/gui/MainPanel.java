@@ -44,8 +44,8 @@ public class MainPanel extends JPanel {
 	private JLabel lblURLNameTxt;
 	private JLabel lblURLHyperLinksTxt;
 	private JLabel lblURLProcessTimeTxt;
-	private JLabel lblURLDepthTxt;
-	private JLabel lblURLExternalLinksTxt;
+	private JLabel lblURLImageTxt;
+	private JLabel lblURLMetaDataTxt;
 	private JLabel lblURLJavaScriptFilesTxt;
 	private JLabel lblURLCSSFilesTxt;
 	
@@ -228,25 +228,25 @@ public class MainPanel extends JPanel {
 		lblURLProcessTimeTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLProcessTimeTxt);
 		
-		JLabel lblURLDepth = new JLabel("URL Depth:");
-		lblURLDepth.setBounds(20, 155, 88, 20);
-		lblURLDepth.setFont(myFont);
-		urlDetailsPanel.add(lblURLDepth);
+		JLabel lblURLImages = new JLabel("URL Images:");
+		lblURLImages.setBounds(20, 155, 88, 20);
+		lblURLImages.setFont(myFont);
+		urlDetailsPanel.add(lblURLImages);
 		
-		lblURLDepthTxt = new JLabel();
-		lblURLDepthTxt.setBounds(108, 155, 234, 20);
-		lblURLDepthTxt.setFont(myFont);
-		urlDetailsPanel.add(lblURLDepthTxt);
+		lblURLImageTxt = new JLabel();
+		lblURLImageTxt.setBounds(108, 155, 234, 20);
+		lblURLImageTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLImageTxt);
 		
-		JLabel lblURLExternalLinks = new JLabel("External Links:");
-		lblURLExternalLinks.setBounds(20, 195, 110, 20);
-		lblURLExternalLinks.setFont(myFont);
-		urlDetailsPanel.add(lblURLExternalLinks);
+		JLabel lblURLMetaDataLinks = new JLabel("MetaData Links:");
+		lblURLMetaDataLinks.setBounds(20, 195, 110, 20);
+		lblURLMetaDataLinks.setFont(myFont);
+		urlDetailsPanel.add(lblURLMetaDataLinks);
 		
-		lblURLExternalLinksTxt = new JLabel();
-		lblURLExternalLinksTxt.setBounds(130, 195, 212, 20);
-		lblURLExternalLinksTxt.setFont(myFont);
-		urlDetailsPanel.add(lblURLExternalLinksTxt);
+		lblURLMetaDataTxt = new JLabel();
+		lblURLMetaDataTxt.setBounds(130, 195, 212, 20);
+		lblURLMetaDataTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLMetaDataTxt);
 		
 		JLabel lblURLJavaScriptFiles = new JLabel("JavaScript Files:");
 		lblURLJavaScriptFiles.setBounds(20, 235, 115, 20);
@@ -306,11 +306,11 @@ public class MainPanel extends JPanel {
 	}
 
 	public JLabel getLblURLDepthTxt() {
-		return lblURLDepthTxt;
+		return lblURLImageTxt;
 	}
 
-	public JLabel getLblURLExternalLinksTxt() {
-		return lblURLExternalLinksTxt;
+	public JLabel getLblURLMetaDataLinksTxt() {
+		return lblURLMetaDataTxt;
 	}
 
 	public JLabel getLblURLJavaScriptFilesTxt() {
@@ -345,8 +345,8 @@ public class MainPanel extends JPanel {
 		this.lblURLNameTxt.setText(website.getUrl());
 		this.lblURLHyperLinksTxt.setText(Integer.toString(website.getHyperLinkCount()));
 		this.lblURLProcessTimeTxt.setText(Integer.toString(website.getProcessTime()) + "ms");
-		this.lblURLDepthTxt.setText(Integer.toString(website.getUrlDepth()));
-		this.lblURLExternalLinksTxt.setText(Integer.toString(website.getExternalLinkCount()));
+		this.lblURLImageTxt.setText(Integer.toString(website.getImagesCount()));
+		this.lblURLMetaDataTxt.setText(Integer.toString(website.getMetaDataCount()));
 		this.lblURLJavaScriptFilesTxt.setText(Integer.toString(website.getJsFileCount()));
 		this.lblURLCSSFilesTxt.setText(Integer.toString(website.getCssFileCount()));
 	}

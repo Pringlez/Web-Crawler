@@ -5,8 +5,8 @@ public class Website {
 	private String url;
 	private int hyperLinkCount;
 	private int processTime;
-	private int urlDepth;
-	private int externalLinkCount;
+	private int imagesCount;
+	private int metaDataCount;
 	private int jsFileCount;
 	private int cssFileCount;
 	private boolean initProcess;
@@ -42,20 +42,20 @@ public class Website {
 		this.processTime = processTime;
 	}
 
-	public int getUrlDepth() {
-		return urlDepth;
+	public int getImagesCount() {
+		return imagesCount;
 	}
 
-	public void setUrlDepth(int urlDepth) {
-		this.urlDepth = urlDepth;
+	public void setImagesCount(int imagesCount) {
+		this.imagesCount = imagesCount;
 	}
 
-	public int getExternalLinkCount() {
-		return externalLinkCount;
+	public int getMetaDataCount() {
+		return metaDataCount;
 	}
 
-	public void setExternalLinkCount(int externalLinkCount) {
-		this.externalLinkCount = externalLinkCount;
+	public void setMetaDataCount(int metaDataCount) {
+		this.metaDataCount = metaDataCount;
 	}
 
 	public int getJsFileCount() {
