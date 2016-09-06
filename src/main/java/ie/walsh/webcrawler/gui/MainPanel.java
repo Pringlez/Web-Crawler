@@ -35,6 +35,7 @@ public class MainPanel extends JPanel {
 	// Global font type & size
 	private Font myFont = new Font("Serif", Font.BOLD, 14);
 	private Border bGreyLine = BorderFactory.createLineBorder(Color.GRAY, 1, true);
+	private JList<String> urlList;
 	private DefaultListModel<String> urlListModel;
 	
 	// Errors status label
@@ -82,6 +83,11 @@ public class MainPanel extends JPanel {
 		insertURLPanel.add(lblAddURL);
 		
 		txtAddURL = new JTextField();
+		txtAddURL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new Thread(new AddURL(getMainPanel())).start();
+			}
+		});
 		txtAddURL.setBounds(80, 6, 504, 25);
 		insertURLPanel.add(txtAddURL);
 		
@@ -129,10 +135,11 @@ public class MainPanel extends JPanel {
 		
 		urlListModel = new DefaultListModel<String>();
 		
-		final JList<String> urlList = new JList<String>(urlListModel);
+		urlList = new JList<String>(urlListModel);
 		urlList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
+				if(!urlListModel.isEmpty())
+					setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
 			}
 		});
 		urlList.setBounds(10, 26, 340, 306);
@@ -158,11 +165,14 @@ public class MainPanel extends JPanel {
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int index;
 				try{
-					urlListModel.removeElementAt(urlList.getSelectedIndex());
-					wCrawl.getProcessedWebsites().remove(urlList.getSelectedIndex());
+					index = urlList.getSelectedIndex();
+					urlList.clearSelection();
+					urlListModel.removeElementAt(index);
+					wCrawl.getProcessedWebsites().remove(index);
 				}catch(Exception error){
-					System.out.println("Error - " + error);
+					System.out.println("Error Removing - " + error);
 				}
 			}
 		});
@@ -175,6 +185,7 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				urlListModel.clear();
 				wCrawl.getProcessedWebsites().clear();
+				urlList.clearSelection();
 			}
 		});
 		btnClearList.setBounds(243, 339, 107, 26);

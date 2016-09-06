@@ -48,7 +48,7 @@ public class WorkerThread implements Runnable {
 			}
 			this.webpageDoc = Jsoup.connect(url).get();
 			this.aTags = webpageDoc.select("a");
-			this.imageTags = webpageDoc.select("image");
+			this.imageTags = webpageDoc.select("img");
 			this.metaTags = webpageDoc.select("meta");
 			this.linkTags = webpageDoc.select("link");
 			this.scriptTags = webpageDoc.select("script");

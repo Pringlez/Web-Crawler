@@ -21,6 +21,7 @@ public class ReprocessURL implements Runnable {
 		for(int i = 0; i < mainPanel.getUrlListModel().size(); i++){
 			mainPanel.getwCrawl().addWebsite(mainPanel.getUrlListModel().getElementAt(i));
 		}
+		mainPanel.getLblErrorStatus().setText("URL's Re-processed!");
 		mainPanel.getProgressBar().setValue(100);
 	}
 }
