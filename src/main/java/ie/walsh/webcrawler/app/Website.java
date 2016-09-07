@@ -6,6 +6,7 @@ public class Website {
 	private int hyperLinkCount;
 	private int processTime;
 	private int imagesCount;
+	private int paragraphCount;
 	private int metaDataCount;
 	private int jsFileCount;
 	private int cssFileCount;
@@ -48,6 +49,14 @@ public class Website {
 
 	public void setImagesCount(int imagesCount) {
 		this.imagesCount = imagesCount;
+	}
+
+	public int getParagraphCount() {
+		return paragraphCount;
+	}
+
+	public void setParagraphCount(int paragraphCount) {
+		this.paragraphCount = paragraphCount;
 	}
 
 	public int getMetaDataCount() {

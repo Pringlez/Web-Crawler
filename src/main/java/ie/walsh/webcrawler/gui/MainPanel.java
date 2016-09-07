@@ -46,6 +46,7 @@ public class MainPanel extends JPanel {
 	private JLabel lblURLHyperLinksTxt;
 	private JLabel lblURLProcessTimeTxt;
 	private JLabel lblURLImageTxt;
+	private JLabel lblURLParagraphsTxt;
 	private JLabel lblURLMetaDataTxt;
 	private JLabel lblURLJavaScriptFilesTxt;
 	private JLabel lblURLCSSFilesTxt;
@@ -138,7 +139,7 @@ public class MainPanel extends JPanel {
 		urlList = new JList<String>(urlListModel);
 		urlList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
-				if(!urlListModel.isEmpty())
+				if(!urlList.isSelectionEmpty())
 					setWebsiteDetails(processedWebsites.get(urlList.getSelectedIndex()));
 			}
 		});
@@ -155,7 +156,8 @@ public class MainPanel extends JPanel {
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Thread(new ReprocessURL(getMainPanel())).start();
+				if(urlList.getModel().getSize() != 0)
+					new Thread(new ReprocessURL(getMainPanel())).start();
 			}
 		});
 		btnReProcess.setBounds(10, 339, 107, 26);
@@ -165,14 +167,10 @@ public class MainPanel extends JPanel {
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int index;
-				try{
-					index = urlList.getSelectedIndex();
-					urlList.clearSelection();
+				if(!urlList.isSelectionEmpty()){
+					int index = urlList.getSelectedIndex();
 					urlListModel.removeElementAt(index);
 					wCrawl.getProcessedWebsites().remove(index);
-				}catch(Exception error){
-					System.out.println("Error Removing - " + error);
 				}
 			}
 		});
@@ -240,42 +238,52 @@ public class MainPanel extends JPanel {
 		urlDetailsPanel.add(lblURLProcessTimeTxt);
 		
 		JLabel lblURLImages = new JLabel("URL Images:");
-		lblURLImages.setBounds(20, 155, 88, 20);
+		lblURLImages.setBounds(20, 155, 98, 20);
 		lblURLImages.setFont(myFont);
 		urlDetailsPanel.add(lblURLImages);
 		
 		lblURLImageTxt = new JLabel();
-		lblURLImageTxt.setBounds(108, 155, 234, 20);
+		lblURLImageTxt.setBounds(118, 155, 223, 20);
 		lblURLImageTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLImageTxt);
 		
+		JLabel lblURLParagraphs = new JLabel("Paragraphs:");
+		lblURLParagraphs.setBounds(20, 195, 90, 20);
+		lblURLParagraphs.setFont(myFont);
+		urlDetailsPanel.add(lblURLParagraphs);
+		
+		lblURLParagraphsTxt = new JLabel();
+		lblURLParagraphsTxt.setBounds(110, 195, 231, 20);
+		lblURLParagraphsTxt.setFont(myFont);
+		urlDetailsPanel.add(lblURLParagraphsTxt);
+		
 		JLabel lblURLMetaDataLinks = new JLabel("MetaData Links:");
-		lblURLMetaDataLinks.setBounds(20, 195, 110, 20);
+		lblURLMetaDataLinks.setBounds(20, 235, 110, 20);
 		lblURLMetaDataLinks.setFont(myFont);
 		urlDetailsPanel.add(lblURLMetaDataLinks);
 		
 		lblURLMetaDataTxt = new JLabel();
-		lblURLMetaDataTxt.setBounds(130, 195, 212, 20);
+		lblURLMetaDataTxt.setBounds(130, 235, 212, 20);
 		lblURLMetaDataTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLMetaDataTxt);
 		
 		JLabel lblURLJavaScriptFiles = new JLabel("JavaScript Files:");
-		lblURLJavaScriptFiles.setBounds(20, 235, 115, 20);
+		lblURLJavaScriptFiles.setBounds(20, 275, 115, 20);
 		lblURLJavaScriptFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFiles);
 		
 		lblURLJavaScriptFilesTxt = new JLabel();
-		lblURLJavaScriptFilesTxt.setBounds(135, 235, 207, 20);
+		lblURLJavaScriptFilesTxt.setBounds(135, 275, 207, 20);
 		lblURLJavaScriptFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLJavaScriptFilesTxt);
 		
 		JLabel lblURLCSSFiles = new JLabel("CSS Files:");
-		lblURLCSSFiles.setBounds(20, 275, 78, 20);
+		lblURLCSSFiles.setBounds(20, 315, 78, 20);
 		lblURLCSSFiles.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFiles);
 		
 		lblURLCSSFilesTxt = new JLabel();
-		lblURLCSSFilesTxt.setBounds(98, 275, 244, 20);
+		lblURLCSSFilesTxt.setBounds(98, 315, 244, 20);
 		lblURLCSSFilesTxt.setFont(myFont);
 		urlDetailsPanel.add(lblURLCSSFilesTxt);
 	}
@@ -357,6 +365,7 @@ public class MainPanel extends JPanel {
 		this.lblURLHyperLinksTxt.setText(Integer.toString(website.getHyperLinkCount()));
 		this.lblURLProcessTimeTxt.setText(Integer.toString(website.getProcessTime()) + "ms");
 		this.lblURLImageTxt.setText(Integer.toString(website.getImagesCount()));
+		this.lblURLParagraphsTxt.setText(Integer.toString(website.getParagraphCount()));
 		this.lblURLMetaDataTxt.setText(Integer.toString(website.getMetaDataCount()));
 		this.lblURLJavaScriptFilesTxt.setText(Integer.toString(website.getJsFileCount()));
 		this.lblURLCSSFilesTxt.setText(Integer.toString(website.getCssFileCount()));

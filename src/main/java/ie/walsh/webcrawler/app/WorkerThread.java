@@ -16,6 +16,7 @@ public class WorkerThread implements Runnable {
 	private Document webpageDoc;
     private Elements aTags;
     private Elements imageTags;
+    private Elements paragraphTags;
     private Elements metaTags;
     private Elements linkTags;
     private Elements scriptTags;
@@ -49,6 +50,7 @@ public class WorkerThread implements Runnable {
 			this.webpageDoc = Jsoup.connect(url).get();
 			this.aTags = webpageDoc.select("a");
 			this.imageTags = webpageDoc.select("img");
+			this.paragraphTags = webpageDoc.select("p");
 			this.metaTags = webpageDoc.select("meta");
 			this.linkTags = webpageDoc.select("link");
 			this.scriptTags = webpageDoc.select("script");
@@ -80,6 +82,12 @@ public class WorkerThread implements Runnable {
 				if(imageTag.attr("abs:src").contains("http")){
 			    	getWebsite().setImagesCount(getWebsite().getImagesCount() + 1);
 			    }
+			}
+			
+			for (Element paragraphTag : this.paragraphTags) {
+				if(paragraphTag.tagName().equals("p")){
+			    	getWebsite().setParagraphCount(getWebsite().getParagraphCount() + 1);
+				}
 			}
 			
 			for (Element metaTag : this.metaTags) {
