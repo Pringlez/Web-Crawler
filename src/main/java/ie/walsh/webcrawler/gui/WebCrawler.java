@@ -2,11 +2,13 @@ package ie.walsh.webcrawler.gui;
 
 import javax.swing.JFrame;
 
+/**
+ * The web crawler GUI frame, which contains the main GUI controls
+ * @author John
+ *
+ */
 public class WebCrawler extends JFrame {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private MainPanel currentPanel;

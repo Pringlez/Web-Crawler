@@ -10,6 +10,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Performs most of the work and crawls through multiple areas of a website
+ * @author John
+ *
+ */
 public class WorkerThread implements Runnable {
 	
 	private Website website;

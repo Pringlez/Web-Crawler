@@ -25,6 +25,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
+/**
+ * The main root panel for the GUI frame
+ * @author John
+ *
+ */
 public class MainPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
@@ -68,6 +73,7 @@ public class MainPanel extends JPanel {
 		setupURLListPanel();
 		setupURLDetailsPanel();
 		setProcessedWebsites(new ArrayList<Website>());
+		// Create new web crawler app with 4 maximum worker threads
 		wCrawl = new WebCrawler(4, processedWebsites, progressBar);
 	}
 

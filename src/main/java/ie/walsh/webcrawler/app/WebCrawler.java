@@ -8,6 +8,13 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JProgressBar;
 
+/**
+ * The web crawler application that processes the queue of tasks
+ * Employs multiple threads to perform the work on its behalf
+ * Stores the results of the work in an ArrayList to be reviewed
+ * @author John
+ *
+ */
 public class WebCrawler implements Runnable {
 
 	private BlockingQueue<Website> websites;

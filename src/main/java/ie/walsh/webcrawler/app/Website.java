@@ -1,5 +1,10 @@
 package ie.walsh.webcrawler.app;
 
+/**
+ * The object that stores multiple details about a website
+ * @author John
+ *
+ */
 public class Website {
 
 	private String url;
