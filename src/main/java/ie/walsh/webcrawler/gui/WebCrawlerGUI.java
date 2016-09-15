@@ -7,13 +7,13 @@ import javax.swing.JFrame;
  * @author John
  *
  */
-public class WebCrawler extends JFrame {
+public class WebCrawlerGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private MainPanel currentPanel;
 	
-	public WebCrawler(){
+	public WebCrawlerGUI(){
 		currentPanel = new MainPanel();
 		setupFrame();
 	}
@@ -29,6 +29,6 @@ public class WebCrawler extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new WebCrawler().setVisible(true);
+		new WebCrawlerGUI().setVisible(true);
 	}
 }

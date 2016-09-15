@@ -4,6 +4,12 @@ import org.jsoup.Jsoup;
 
 import ie.walsh.webcrawler.gui.MainPanel;
 
+/**
+ * This class handles adding new URLs to the queue
+ * Allowing the GUI thread to remain unblocked
+ * @author John
+ *
+ */
 public class AddURL implements Runnable {
 	
 	private MainPanel mainPanel;
@@ -17,6 +23,10 @@ public class AddURL implements Runnable {
 		addToQueue(this.mainPanel);
 	}
 
+	/**
+	 * Adds new URLs to the processing queue
+	 * @param mainPanel
+	 */
 	private void addToQueue(MainPanel mainPanel) {
 		mainPanel.getLblErrorStatus().setText("");
 		if(!mainPanel.getTxtAddURL().getText().isEmpty()){
@@ -34,6 +44,12 @@ public class AddURL implements Runnable {
 		}
 	}
 	
+	/**
+	 * Checks the URL passed is OK to be processed
+	 * Return a boolean on result
+	 * @param url
+	 * @return
+	 */
 	private boolean isURLGood(String url) {
 		try {
 			if(!url.contains("http://")){

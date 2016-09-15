@@ -2,13 +2,13 @@ ie\walsh\webcrawler\gui\func\ReprocessURL.class
 ie\walsh\webcrawler\gui\MainPanel$2.class
 ie\walsh\webcrawler\app\WebCrawler.class
 ie\walsh\webcrawler\gui\MainPanel$3.class
-ie\walsh\webcrawler\gui\WebCrawler.class
 ie\walsh\webcrawler\Runner.class
 ie\walsh\webcrawler\gui\func\AddURL.class
 ie\walsh\webcrawler\gui\MainPanel$1.class
 ie\walsh\webcrawler\gui\MainPanel$6.class
 ie\walsh\webcrawler\gui\MainPanel$5.class
 ie\walsh\webcrawler\gui\MainPanel.class
+ie\walsh\webcrawler\gui\WebCrawlerGUI.class
 ie\walsh\webcrawler\gui\MainPanel$4.class
 ie\walsh\webcrawler\gui\MainPanel$7.class
 ie\walsh\webcrawler\app\Website.class

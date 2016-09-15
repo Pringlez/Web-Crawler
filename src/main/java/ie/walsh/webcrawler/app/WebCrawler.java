@@ -37,6 +37,13 @@ public class WebCrawler implements Runnable {
 		initThreads(250);
 	}
 	
+	/**
+	 * Initiate the thread pool that will delegate 
+	 * work out to separate threads
+	 * You can pass a integer to delay the time between
+	 * new threads starting work
+	 * @param delayMS
+	 */
 	private void initThreads(int delayMS) {
 		// Keep looping & check the queue for any websites to process
 		while(true){

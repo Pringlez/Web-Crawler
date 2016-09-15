@@ -66,6 +66,9 @@ public class MainPanel extends JPanel {
 	private WebCrawler wCrawl;
 	private ArrayList<Website> processedWebsites;
 	
+	/**
+	 * Calls the different setup panel methods to build the GUI
+	 */
 	public MainPanel() {
 		setLayout(null);
 		setMainPanel(this);

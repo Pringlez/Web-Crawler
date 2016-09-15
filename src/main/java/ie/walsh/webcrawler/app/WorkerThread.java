@@ -42,6 +42,12 @@ public class WorkerThread implements Runnable {
 		}
 	}
 	
+	/**
+	 * Checks the URL passed is OK to be processed
+	 * Return a boolean on result
+	 * @param url
+	 * @return
+	 */
 	private boolean isURLGood(String url) {
 		try {
 			if(!url.contains("http://")){
@@ -72,6 +78,10 @@ public class WorkerThread implements Runnable {
 			crawlSite(getWebsite().getUrl());
 	}
 	
+	/**
+	 * Crawls a specific URL for details about it
+	 * @param url
+	 */
 	private void crawlSite(String url) {
         try {
         	// Start recording the processing time
