@@ -24,6 +24,13 @@ public class WebCrawler implements Runnable {
 	// Processing bar
 	private JProgressBar progressBar;
 	
+	/**
+	 * Constructing a new 'WebCrawler' instance with passed variables
+	 * Then creates a new thread specific for this newly created class instance
+	 * @param threadPoolSize
+	 * @param processedWebsites
+	 * @param progressBar
+	 */
 	public WebCrawler(int threadPoolSize, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsites(new ArrayBlockingQueue<Website>(5000));
 		setExecutor(Executors.newFixedThreadPool(threadPoolSize));
@@ -32,6 +39,10 @@ public class WebCrawler implements Runnable {
 		(new Thread(this)).start();
 	}
 	
+	/**
+	 * Run thread method that will initiate worker threads
+	 * Pass a integer to set the delay in milliseconds
+	 */
 	@Override
 	public void run() {
 		initThreads(250);

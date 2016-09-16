@@ -20,6 +20,10 @@ public class Website {
 	public Website() {	
 	}
 	
+	/**
+	 * Constructing a new 'Website' instance with passed variables
+	 * @param url
+	 */
 	public Website(String url) {
 		setUrl(url);
 	}

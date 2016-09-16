@@ -33,6 +33,12 @@ public class WorkerThread implements Runnable {
  	// Work thread control
  	private boolean isCrawlable;
 	
+ 	/**
+ 	 * Constructing a new 'WorkerThread' instance with passed variables
+ 	 * @param website
+ 	 * @param processedWebsites
+ 	 * @param progressBar
+ 	 */
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsite(website);
 		if(isURLGood(website.getUrl())){
@@ -72,6 +78,9 @@ public class WorkerThread implements Runnable {
 		}
 	}
 
+	/**
+	 * Run thread method that will initiate the crawling of a website
+	 */
 	@Override
 	public void run() {
 		if(isCrawlable())
