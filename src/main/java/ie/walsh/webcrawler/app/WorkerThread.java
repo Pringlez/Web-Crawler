@@ -10,6 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import ie.walsh.webcrawler.gui.func.CheckURL;
+
 /**
  * Performs most of the work and crawls through multiple areas of a website
  * @author John
@@ -41,29 +43,16 @@ public class WorkerThread implements Runnable {
  	 */
 	public WorkerThread(Website website, ArrayList<Website> processedWebsites, JProgressBar progressBar) {
 		setWebsite(website);
-		if(isURLGood(website.getUrl())){
+		if(new CheckURL().isURLGood(website.getUrl())){
+			setTagsVars(website.getUrl());
 			setProcessedWebsites(processedWebsites);
 			setProgressBar(progressBar);
 			setCrawlable(true);
 		}
 	}
 	
-	/**
-	 * Checks the URL passed is OK to be processed
-	 * Return a boolean on result
-	 * @param url
-	 * @return
-	 */
-	private boolean isURLGood(String url) {
+	private void setTagsVars(String url) {
 		try {
-			if(!url.contains("http://")){
-				if(url.contains("https://")){
-					url = "http://" + url.substring(8, url.length());
-				}
-				else{
-					url = "http://" + url;
-				}
-			}
 			this.webpageDoc = Jsoup.connect(url).get();
 			this.aTags = webpageDoc.select("a");
 			this.imageTags = webpageDoc.select("img");
@@ -71,10 +60,8 @@ public class WorkerThread implements Runnable {
 			this.metaTags = webpageDoc.select("meta");
 			this.linkTags = webpageDoc.select("link");
 			this.scriptTags = webpageDoc.select("script");
-			return true;
 		} catch (IOException error) {
-			System.out.println("Init Crawl Error - " + error);
-			return false;
+			System.out.println("Set Tags Error - " + error);
 		}
 	}
 
