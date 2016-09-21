@@ -14,7 +14,7 @@ public class WebCrawlerGUI extends JFrame {
 	private MainPanel currentPanel;
 	
 	public WebCrawlerGUI(){
-		currentPanel = new MainPanel();
+		setCurrentPanel(new MainPanel());
 		setupFrame();
 	}
 	
@@ -27,8 +27,12 @@ public class WebCrawlerGUI extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-	
+
 	public static void main(String[] args) {
 		new WebCrawlerGUI().setVisible(true);
+	}
+	
+	private void setCurrentPanel(MainPanel currentPanel) {
+		this.currentPanel = currentPanel;
 	}
 }

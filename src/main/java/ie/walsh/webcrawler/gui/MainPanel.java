@@ -76,10 +76,12 @@ public class MainPanel extends JPanel {
 		setupURLListPanel();
 		setupURLDetailsPanel();
 		setProcessedWebsites(new ArrayList<Website>());
-		// Create new web crawler app with 4 maximum worker threads
-		wCrawl = new WebCrawler(4, processedWebsites, progressBar);
+		setwCrawl(new WebCrawler(4, processedWebsites, progressBar));
 	}
 
+	/**
+	 * Setup of the main URL panel 
+	 */
 	private void setupURLPanel() {
 		JPanel insertURLPanel = new JPanel();
 		insertURLPanel.setLayout(null);
@@ -133,6 +135,9 @@ public class MainPanel extends JPanel {
 		optionsPanel.add(btnExitApp);
 	}
 	
+	/**
+	 * Setup of the URL list panel
+	 */
 	private void setupURLListPanel() {
 		JPanel urlListPanel = new JPanel();
 		urlListPanel.setLayout(null);
@@ -159,9 +164,16 @@ public class MainPanel extends JPanel {
 		urlList.setVisibleRowCount(-1);
 		urlListPanel.add(urlList);
 		
+		/* TODO - Work on implementing a scrolling function
+		 * into the list component, the GUI will currently only
+		 * show about 25 items in the list before it clips outside
+		 * the GUI panel
+		 */
+		
 		//JScrollPane listScroller = new JScrollPane(urlList);
 		//listScroller.setPreferredSize(new Dimension(250, 80));
 		
+		// Re-process all items in the list
 		JButton btnReProcess = new JButton("Re-Process");
 		btnReProcess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -173,6 +185,7 @@ public class MainPanel extends JPanel {
 		btnReProcess.setFont(myFont);
 		urlListPanel.add(btnReProcess);
 		
+		// Remove the currently selected item from the list
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,6 +200,7 @@ public class MainPanel extends JPanel {
 		btnRemove.setFont(myFont);
 		urlListPanel.add(btnRemove);
 		
+		// Remove all items from the list
 		JButton btnClearList = new JButton("Clear List");
 		btnClearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -205,6 +219,9 @@ public class MainPanel extends JPanel {
 		urlListPanel.add(progressBar);
 	}
 	
+	/**
+	 * Setup of the URL details panel
+	 */
 	private void setupURLDetailsPanel() {
 		JPanel urlDetailsPanel = new JPanel();
 		urlDetailsPanel.setLayout(null);
@@ -359,6 +376,10 @@ public class MainPanel extends JPanel {
 
 	public WebCrawler getwCrawl() {
 		return wCrawl;
+	}
+	
+	private void setwCrawl(WebCrawler wCrawl) {
+		this.wCrawl = wCrawl;
 	}
 
 	public ArrayList<Website> getProcessedWebsites() {
